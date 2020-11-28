@@ -1,0 +1,28 @@
+{
+  "name": "ongaku-server",
+  "version": "1.0.0",
+  "description": "Back-end API for the Ongaku app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritammv/ongaku-server.git"
+  },
+  "author": "Ongaku Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritammv/ongaku-server/issues"
+  },
+  "homepage": "https://github.com/ritammv/ongaku-server#readme",
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {}
+}
