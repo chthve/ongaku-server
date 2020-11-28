@@ -9,10 +9,12 @@ const Sequelize = require('sequelize');
 
 const basename = path.basename(__filename);
 const db = {};
+
 const dbName =
   process.env.NODE_ENV === 'test'
     ? process.env.DB_NAME_TEST
     : process.env.DB_NAME;
+
 const sequelize = new Sequelize(
   dbName,
   process.env.DB_USERNAME,
@@ -30,6 +32,7 @@ const sequelize = new Sequelize(
     // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   }
 );
+
 sequelize
   .authenticate()
   .then(() => {
@@ -51,11 +54,14 @@ fs.readdirSync(__dirname)
     );
     db[model.name] = model;
   });
+
 Object.keys(db).forEach((model) => {
   if (db[model].associate) {
     db[model].associate(db);
   }
 });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
 module.exports = db;
