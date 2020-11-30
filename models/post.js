@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     static associate({ User }) {
       this.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+      this.belongsToMany(User, { through: 'users_posts' });
     }
   }
   Post.init(

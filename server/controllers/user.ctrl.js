@@ -25,3 +25,16 @@ exports.createUser = async (req, res) => {
     res.status(500);
   }
 };
+
+exports.savePost = async (req, res) => {
+  try {
+    const { userId, postId } = req.body;
+    const user = await db.User.findByPk(userId);
+    const post = await db.Post.findByPk(postId);
+    const result = await user.addSaved(post);
+    res.status(201).send(result);
+  } catch (error) {
+    console.error(error); //eslint-disable-line
+    res.status(500);
+  }
+};
