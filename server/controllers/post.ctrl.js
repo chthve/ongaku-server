@@ -7,6 +7,7 @@ exports.getPost = async (req, res) => {
       where: {
         uuid,
       },
+      // include: [{ model: db.User, as: 'user' }],
     });
     res.status(200).send(post);
   } catch (error) {

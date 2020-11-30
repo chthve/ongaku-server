@@ -3,10 +3,8 @@ const db = require('../../models');
 exports.getUser = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const user = await db.User.findOne({
-      where: {
-        uuid,
-      },
+    const user = await db.User.findByPk(uuid, {
+      include: [db.Post],
     });
     res.status(200).send(user);
   } catch (error) {

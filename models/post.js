@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined, userId: undefined };
+      return { ...this.get() };
     }
   }
   Post.init(
     {
-      uuid: {
+      id: {
         type: DataTypes.UUID,
+        primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
       title: {
