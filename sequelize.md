@@ -9,7 +9,7 @@ sequelize db:create
 ### Generating a model
 
 ```bash
-sequelize model:generate --name user --attributes name:string,email:string
+sequelize model:generate --name User --attributes name:string,email:string
 ```
 
 ### Drop db
