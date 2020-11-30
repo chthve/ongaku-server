@@ -2,8 +2,8 @@ const db = require('../../models');
 
 exports.getUser = async (req, res) => {
   try {
-    const { uuid } = req.params;
-    const user = await db.User.findByPk(uuid, {
+    const { id } = req.params;
+    const user = await db.User.findByPk(id, {
       include: [db.Post],
     });
     res.status(200).send(user);
@@ -35,6 +35,20 @@ exports.savePost = async (req, res) => {
     res.status(201).send(result);
   } catch (error) {
     console.error(error); //eslint-disable-line
+    res.status(500);
+  }
+};
+
+exports.getSavedPosts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('check', id);
+    console.log('are u here');
+    const user = await db.User.findByPk(id);
+    const result = await user.getSaved();
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
     res.status(500);
   }
 };
