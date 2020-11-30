@@ -31,6 +31,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      body: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
