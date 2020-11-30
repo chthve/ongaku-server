@@ -1,13 +1,5 @@
+/* eslint-disable no-console */
 const db = require('../../models');
-const channel = require('../../models/channel');
-
-// exports.getChannels = async (req, res) => {
-//   try {
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500);
-//   }
-// };
 
 exports.createChannels = async (req, res) => {
   try {
@@ -24,16 +16,16 @@ exports.createUserChannels = async (req, res) => {
   try {
     const { id } = req.params;
     const channels = req.body;
+
+    const channelIds = channels.map((channel) => +channel.id);
+
     const user = await db.User.findByPk(id);
-    const dbChannels = await db.Channel.findAll();
 
-    console.log(dbChannels);
+    const result = await user.setChannels(channelIds);
 
-    // const result = await db.Channel.findAll({
-    //   where: {
-    //     name:
-    //   }
-    // });
-    // const saved = await db.user.
-  } catch (error) {}
+    res.status(201).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
 };
