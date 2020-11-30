@@ -7,7 +7,6 @@ exports.getPost = async (req, res) => {
       where: {
         uuid,
       },
-      // include: [{ model: db.User, as: 'user' }],
     });
     res.status(200).send(post);
   } catch (error) {
@@ -18,8 +17,6 @@ exports.getPost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    // const {channel} = req.params;
-
     const { userId, title, artist, thumbnail, year, body } = req.body;
 
     const post = await db.Post.create({

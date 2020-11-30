@@ -5,8 +5,10 @@ const channelCtrl = require('./controllers/channel.ctrl');
 
 router.get('/user/:id', userCtrl.getUser);
 router.post('/user', userCtrl.createUser);
+
 router.get('/user/:id/saved', userCtrl.getSavedPosts);
 router.post('/user/:id/saved', userCtrl.savePost);
+
 router.post('/user/:id/channels', channelCtrl.createUserChannels);
 router.post('/private/channels', channelCtrl.createChannels);
 

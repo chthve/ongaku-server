@@ -18,9 +18,7 @@ exports.createUserChannels = async (req, res) => {
     const channels = req.body;
 
     const channelIds = channels.map((channel) => +channel.id);
-
     const user = await db.User.findByPk(id);
-
     const result = await user.setChannels(channelIds);
 
     res.status(201).send(result);
