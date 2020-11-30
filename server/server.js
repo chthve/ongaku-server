@@ -5,10 +5,8 @@ require('dotenv').config();
 const port = process.env.PORT || 3001;
 
 (async () => {
-  await db.sequelize.sync();
+  await db.sequelize.authenticate();
   app.listen(port, () => {
     console.log(`Server clubbing at http://localhost:${port} 🕺`); // eslint-disable-line
   });
 })();
-
-db.sequelize.authenticate();
