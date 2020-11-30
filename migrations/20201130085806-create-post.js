@@ -11,6 +11,10 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -37,7 +41,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, DataTypes) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('posts');
   },
 };
