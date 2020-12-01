@@ -18,6 +18,9 @@ router
   .get(channelCtrl.getDefaultChannels)
   .post(channelCtrl.createDefaultChannels);
 
+router.post('/channels/private/:userId', channelCtrl.createPrivateChannels);
+router.post('/channels/:id/sub', channelCtrl.createSubChannel);
+
 router.post('/users/:id/channels', channelCtrl.assignUserToChannels);
 
 router.get('/posts/:id', postCtrl.getPost);
