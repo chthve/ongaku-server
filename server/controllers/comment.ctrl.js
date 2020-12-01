@@ -12,6 +12,6 @@ exports.postComment = async (req, res) => {
     res.status(201).send(comment);
   } catch (error) {
     console.error(error); //eslint-disable-line
-    res.status(500);
+    res.sendStatus(500);
   }
 };

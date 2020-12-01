@@ -8,7 +8,7 @@ exports.createDefaultChannels = async (req, res) => {
     res.status(201).send(result);
   } catch (err) {
     console.error(err);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -20,11 +20,12 @@ exports.createPrivateChannels = async (req, res) => {
     const channel = await db.Channel.create({
       ownerId: userId,
       name,
+      private: true,
     });
     res.status(201).send(channel);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -40,22 +41,23 @@ exports.assignUserToChannels = async (req, res) => {
     res.status(201).send(result);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
 exports.createSubChannel = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, isPrivate } = req.body;
     const channel = await db.Channel.create({
       parentId: id,
       name,
+      private: !!isPrivate,
     });
     res.status(201).send(channel);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -69,7 +71,7 @@ exports.getDefaultChannels = async (req, res) => {
     res.status(200).send(channels);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -77,11 +79,14 @@ exports.getChannel = async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await db.Channel.findByPk(id, {
-      include: [{ model: db.Post, as: 'posts' }],
+      include: [
+        { model: db.Post, as: 'posts' },
+        { model: db.Channel, as: 'subChannel' },
+      ],
     });
     res.status(200).send(channel);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };

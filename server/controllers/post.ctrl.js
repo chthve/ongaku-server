@@ -13,7 +13,7 @@ exports.getPost = async (req, res) => {
     res.status(200).send(post);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -37,6 +37,6 @@ exports.createPost = async (req, res) => {
     res.status(201).send(post);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };

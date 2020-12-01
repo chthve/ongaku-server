@@ -11,13 +11,13 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      parentId: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
       ownerId: {
         type: DataTypes.STRING,
         defaultValue: null,
+      },
+      private: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

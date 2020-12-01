@@ -12,7 +12,7 @@ exports.getUser = async (req, res) => {
     res.status(200).send(user);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -27,7 +27,7 @@ exports.createUser = async (req, res) => {
     res.status(201).send(user);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -43,7 +43,7 @@ exports.savePost = async (req, res) => {
     res.status(201).send(result);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };
 
@@ -57,6 +57,6 @@ exports.getSavedPosts = async (req, res) => {
     res.status(200).send(result);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };

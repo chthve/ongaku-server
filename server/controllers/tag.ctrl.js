@@ -23,6 +23,6 @@ exports.getTags = async (req, res) => {
     res.status(201).send(tag);
   } catch (error) {
     console.error(error);
-    res.status(500);
+    res.sendStatus(500);
   }
 };

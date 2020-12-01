@@ -7,6 +7,12 @@ module.exports = (sequelize, DataTypes) => {
         through: 'users_channels',
       });
       this.hasMany(Post, { foreignKey: 'channelId', as: 'posts' });
+      this.hasMany(this, {
+        as: 'subChannel',
+        foreignKey: 'parentId',
+        sourceKey: 'id',
+        useJunctionTable: false,
+      });
     }
   }
   Channel.init(
@@ -20,13 +26,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      parentId: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
       ownerId: {
         type: DataTypes.STRING,
         defaultValue: null,
+      },
+      private: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
