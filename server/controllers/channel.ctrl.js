@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const db = require('../../models');
 
-exports.createChannels = async (req, res) => {
+exports.createDefaultChannels = async (req, res) => {
   try {
     const result = await db.Channel.bulkCreate(req.body);
 
@@ -12,7 +12,7 @@ exports.createChannels = async (req, res) => {
   }
 };
 
-exports.createUserChannels = async (req, res) => {
+exports.assignUserToChannels = async (req, res) => {
   try {
     const { id } = req.params;
     const channels = req.body;
@@ -22,6 +22,33 @@ exports.createUserChannels = async (req, res) => {
     const result = await user.setChannels(channelIds);
 
     res.status(201).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+};
+
+exports.getDefaultChannels = async (req, res) => {
+  try {
+    const channels = await db.Channel.findAll({
+      where: {
+        parentId: null,
+      },
+    });
+    res.status(200).send(channels);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+};
+
+exports.getChannel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const channel = await db.Channel.findByPk(id, {
+      include: [db.Post],
+    });
+    res.status(200).send(channel);
   } catch (error) {
     console.error(error);
     res.status(500);

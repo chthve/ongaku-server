@@ -1,23 +1,23 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('Channels', {
+    await queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      name: {
-        type: DataTypes.STRING,
+      userId: {
+        type: DataTypes.UUID,
         allowNull: false,
       },
-      parentId: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+      postId: {
+        type: DataTypes.UUID,
+        allowNull: false,
       },
-      ownerId: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+      body: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +30,6 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('Channels');
+    await queryInterface.dropTable('Comments');
   },
 };

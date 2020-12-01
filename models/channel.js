@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      parent_id: {
+      parentId: {
         type: DataTypes.STRING,
         defaultValue: null,
       },
-      owner_id: {
+      ownerId: {
         type: DataTypes.STRING,
         defaultValue: null,
       },
