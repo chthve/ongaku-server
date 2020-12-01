@@ -12,15 +12,14 @@ exports.createDefaultChannels = async (req, res) => {
   }
 };
 
-exports.createPrivateChannels = async (req, res) => {
+exports.createChannels = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { name } = req.body;
-    console.log(name);
+    const { name, isPrivate } = req.body;
     const channel = await db.Channel.create({
       ownerId: userId,
       name,
-      private: true,
+      private: !!isPrivate,
     });
     res.status(201).send(channel);
   } catch (error) {
