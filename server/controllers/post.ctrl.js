@@ -2,10 +2,10 @@ const db = require('../../models');
 
 exports.getPost = async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { id } = req.params;
     const post = await db.Post.findOne({
       where: {
-        uuid,
+        id,
       },
     });
     res.status(200).send(post);
@@ -18,9 +18,11 @@ exports.getPost = async (req, res) => {
 exports.createPost = async (req, res) => {
   try {
     const { userId, title, artist, thumbnail, year, body } = req.body;
+    const { channelId } = req.params;
 
     const post = await db.Post.create({
       userId,
+      channelId,
       title,
       artist,
       year,

@@ -12,7 +12,7 @@ router.post('/user/:id/saved', userCtrl.savePost);
 router.post('/user/:id/channels', channelCtrl.createUserChannels);
 router.post('/private/channels', channelCtrl.createChannels);
 
-router.get('/post/:uuid', postCtrl.getPost);
-router.post('/post', postCtrl.createPost);
+router.get('/post/:id', postCtrl.getPost);
+router.post('/post/:channelId', postCtrl.createPost);
 
 module.exports = router;

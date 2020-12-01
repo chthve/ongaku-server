@@ -11,6 +11,10 @@ module.exports = {
         type: DataTypes.UUID,
         allowNull: false,
       },
+      channelId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
