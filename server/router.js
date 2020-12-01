@@ -3,6 +3,7 @@ const userCtrl = require('./controllers/user.ctrl');
 const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
 const commentCtrl = require('./controllers/comment.ctrl');
+const tagCtrl = require('./controllers/tag.ctrl');
 
 router.get('/user/:id', userCtrl.getUser);
 router.post('/user', userCtrl.createUser);
@@ -19,5 +20,9 @@ router.post('/post/:id/comment', commentCtrl.postComment);
 
 router.get('/channels/default', channelCtrl.getDefaultChannels);
 router.get('/channel/:id', channelCtrl.getChannel);
+
+// router.post('/tag', tagCtrl.createTag);
+
+router.route('/tag').post(tagCtrl.createTag).get(tagCtrl.getTags);
 
 module.exports = router;

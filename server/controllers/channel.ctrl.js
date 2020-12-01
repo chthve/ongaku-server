@@ -46,7 +46,7 @@ exports.getChannel = async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await db.Channel.findByPk(id, {
-      include: [db.Post],
+      include: [{ model: db.Post, as: 'posts' }],
     });
     res.status(200).send(channel);
   } catch (error) {
