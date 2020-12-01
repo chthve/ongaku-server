@@ -5,24 +5,27 @@ const channelCtrl = require('./controllers/channel.ctrl');
 const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
 
-router.get('/user/:id', userCtrl.getUser);
-router.post('/user', userCtrl.createUser);
+router.get('/users/:id', userCtrl.getUser);
+router.post('/users', userCtrl.createUser);
 
-router.get('/user/:id/saved', userCtrl.getSavedPosts);
-router.post('/user/:id/saved', userCtrl.savePost);
+router
+  .route('/users/:id/saved')
+  .get(userCtrl.getSavedPosts)
+  .post(userCtrl.savePost);
 
-router.post('/user/:id/channels', channelCtrl.assignUserToChannels);
-router.post('/private/channels', channelCtrl.createDefaultChannels);
+router
+  .route('/channels/default')
+  .get(channelCtrl.getDefaultChannels)
+  .post(channelCtrl.createDefaultChannels);
 
-router.get('/post/:id', postCtrl.getPost);
-router.post('/post/:channelId', postCtrl.createPost);
-router.post('/post/:id/comment', commentCtrl.postComment);
+router.post('/users/:id/channels', channelCtrl.assignUserToChannels);
 
-router.get('/channels/default', channelCtrl.getDefaultChannels);
-router.get('/channel/:id', channelCtrl.getChannel);
+router.get('/posts/:id', postCtrl.getPost);
+router.post('/posts/:channelId', postCtrl.createPost);
+router.post('/posts/:id/comment', commentCtrl.postComment);
 
-// router.post('/tag', tagCtrl.createTag);
+router.get('/channels/:id', channelCtrl.getChannel);
 
-router.route('/tag').post(tagCtrl.createTag).get(tagCtrl.getTags);
+router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
 module.exports = router;
