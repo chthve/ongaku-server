@@ -15,9 +15,10 @@ exports.createDefaultChannels = async (req, res) => {
 exports.createChannel = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { name, isPrivate } = req.body;
+    const { name, isPrivate, parentId } = req.body;
     const channel = await db.Channel.create({
       ownerId: userId,
+      parentId: !!parentId,
       name,
       private: !!isPrivate,
     });
@@ -42,22 +43,6 @@ exports.subscribeToChannels = async (req, res) => {
     const result = await user.setChannels(channelIds);
 
     res.status(201).send(result);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
-
-exports.createSubChannel = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, isPrivate } = req.body;
-    const channel = await db.Channel.create({
-      parentId: id,
-      name,
-      private: !!isPrivate,
-    });
-    res.status(201).send(channel);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
