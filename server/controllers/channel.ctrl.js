@@ -18,7 +18,7 @@ exports.createChannel = async (req, res) => {
     const { name, isPrivate, parentId } = req.body;
     const channel = await db.Channel.create({
       ownerId: userId,
-      parentId: !!parentId,
+      parentId: parentId || null,
       name,
       private: !!isPrivate,
     });

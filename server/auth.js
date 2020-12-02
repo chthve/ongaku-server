@@ -13,7 +13,7 @@ passport.use(
       consumerSecret: process.env.consumerSecret,
       callbackURL: process.env.callbackURL,
     },
-    function (token, tokenSecret, profile, done) {
+    (token, tokenSecret, profile, done) => {
       db.User.findOrCreate({
         where: { token, tokenSecret },
       }).then((err, user) => {
