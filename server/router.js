@@ -19,7 +19,6 @@ router
   .post(channelCtrl.createDefaultChannels);
 
 router.post('/channels/:userId', channelCtrl.createChannel);
-router.post('/channels/:id/sub', channelCtrl.createSubChannel);
 
 router.post('/users/:id/channels', channelCtrl.subscribeToChannels);
 
