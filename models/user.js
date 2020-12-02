@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Post, { through: 'users_posts', as: 'Saved' });
       this.belongsToMany(Channel, {
         through: 'users_channels',
-        as: 'Channels',
+        as: 'channels',
       });
-      this.hasMany(Comment, { foreignKey: 'userId' });
+      this.hasMany(Comment, { foreignKey: 'userId', as: 'comments' });
     }
   }
   User.init(

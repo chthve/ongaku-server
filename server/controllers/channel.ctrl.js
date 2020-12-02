@@ -81,8 +81,20 @@ exports.getChannel = async (req, res) => {
       include: [
         { model: db.Post, as: 'posts' },
         { model: db.Channel, as: 'subChannel' },
+        {
+          model: db.User,
+        },
       ],
     });
+    const users = await db.Channel.findAll({
+      include: [
+        {
+          model: db.User,
+          attributes: ['username'],
+        },
+      ],
+    });
+    console.log(users);
     res.status(200).send(channel);
   } catch (error) {
     console.error(error);
