@@ -18,10 +18,10 @@ router
   .get(channelCtrl.getDefaultChannels)
   .post(channelCtrl.createDefaultChannels);
 
-router.post('/channels/:userId', channelCtrl.createChannels);
+router.post('/channels/:userId', channelCtrl.createChannel);
 router.post('/channels/:id/sub', channelCtrl.createSubChannel);
 
-router.post('/users/:id/channels', channelCtrl.assignUserToChannels);
+router.post('/users/:id/channels', channelCtrl.subscribeToChannels);
 
 router.get('/posts/:id', postCtrl.getPost);
 router.post('/posts/:channelId', postCtrl.createPost);

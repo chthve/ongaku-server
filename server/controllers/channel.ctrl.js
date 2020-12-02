@@ -12,7 +12,7 @@ exports.createDefaultChannels = async (req, res) => {
   }
 };
 
-exports.createChannels = async (req, res) => {
+exports.createChannel = async (req, res) => {
   try {
     const { userId } = req.params;
     const { name, isPrivate } = req.body;
@@ -32,7 +32,7 @@ exports.createChannels = async (req, res) => {
   }
 };
 
-exports.assignUserToChannels = async (req, res) => {
+exports.subscribeToChannels = async (req, res) => {
   try {
     const { id } = req.params;
     const channels = req.body;
