@@ -11,7 +11,8 @@ router.post('/users', userCtrl.createUser);
 router
   .route('/users/:id/saved')
   .get(userCtrl.getSavedPosts)
-  .post(userCtrl.savePost);
+  .post(userCtrl.savePost)
+  .delete(userCtrl.unSavePost);
 
 router
   .route('/channels/default')

@@ -19,7 +19,16 @@ exports.getPost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    const { userId, title, artist, thumbnail, year, body, tags } = req.body;
+    const {
+      userId,
+      title,
+      artist,
+      thumbnail,
+      year,
+      body,
+      label,
+      tags,
+    } = req.body;
     const { channelId } = req.params;
 
     const post = await db.Post.create({
@@ -28,6 +37,7 @@ exports.createPost = async (req, res) => {
       title,
       artist,
       year,
+      label,
       body,
       thumbnail,
     });

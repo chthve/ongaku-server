@@ -51,6 +51,23 @@ exports.savePost = async (req, res) => {
   }
 };
 
+exports.unSavePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { postId } = req.body;
+
+    const post = await db.Post.findByPk(postId);
+    const result = await post.destroy({
+      include: [{ model: db.User, where: { id } }],
+    });
+
+    res.status(204).send(result);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 exports.getSavedPosts = async (req, res) => {
   try {
     const { id } = req.params;
