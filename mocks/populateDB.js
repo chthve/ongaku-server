@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const db = require('../models');
 const { users, tags, channels } = require('./mock');
 

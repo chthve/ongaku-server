@@ -6,7 +6,11 @@ exports.getUser = async (req, res) => {
     const { id } = req.params;
 
     const user = await db.User.findByPk(id, {
-      include: [db.Post],
+      include: [
+        { model: db.Post, as: 'posts' },
+        { model: db.Channel, as: 'channels' },
+        { model: db.Comment, as: 'comments' },
+      ],
     });
 
     res.status(200).send(user);
