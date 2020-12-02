@@ -21,6 +21,10 @@ exports.createChannels = async (req, res) => {
       name,
       private: !!isPrivate,
     });
+
+    const user = await db.User.findByPk(userId);
+    await user.setChannels(channel.id);
+
     res.status(201).send(channel);
   } catch (error) {
     console.error(error);
@@ -94,7 +98,7 @@ exports.getChannel = async (req, res) => {
 
     const { length } = users[0].dataValues.Users;
 
-    res.status(200).json({ users: length, channel });
+    res.status(200).send({ users: length, channel });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
