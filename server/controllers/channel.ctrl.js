@@ -54,6 +54,7 @@ exports.getDefaultChannels = async (req, res) => {
     const channels = await db.Channel.findAll({
       where: {
         parentId: null,
+        ownerId: null,
       },
     });
     res.status(200).send(channels);
