@@ -65,7 +65,7 @@ const {
       } = post;
 
       const newPost = await db.Post.create({
-        post_title: postTitle,
+        postTitle,
         userId,
         channelId,
         title,
