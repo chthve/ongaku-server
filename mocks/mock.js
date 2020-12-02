@@ -1,18 +1,43 @@
 const users = [
   {
     username: 'Charles',
+    discogsId: 23415,
+    avatarUrl:
+      'https://images-platform.99static.com//85pzSgcGuJohMU2W1ukFHhpfZr0=/0x0:1000x1000/fit-in/500x500/99designs-contests-attachments/89/89981/attachment_89981069',
+    wantsUrl: 'https://discogs.com',
+    collectionUrl: 'https://discogs.com',
   },
   {
     username: 'Gui',
+    discogsId: 23415,
+    avatarUrl:
+      'https://images-platform.99static.com//85pzSgcGuJohMU2W1ukFHhpfZr0=/0x0:1000x1000/fit-in/500x500/99designs-contests-attachments/89/89981/attachment_89981069',
+    wantsUrl: 'https://discogs.com',
+    collectionUrl: 'https://discogs.com',
   },
   {
     username: 'Manji',
+    discogsId: 23415,
+    avatarUrl:
+      'https://images-platform.99static.com//85pzSgcGuJohMU2W1ukFHhpfZr0=/0x0:1000x1000/fit-in/500x500/99designs-contests-attachments/89/89981/attachment_89981069',
+    wantsUrl: 'https://discogs.com',
+    collectionUrl: 'https://discogs.com',
   },
   {
     username: 'Eli',
+    discogsId: 23415,
+    avatarUrl:
+      'https://images-platform.99static.com//85pzSgcGuJohMU2W1ukFHhpfZr0=/0x0:1000x1000/fit-in/500x500/99designs-contests-attachments/89/89981/attachment_89981069',
+    wantsUrl: 'https://discogs.com',
+    collectionUrl: 'https://discogs.com',
   },
   {
     username: 'Ritam',
+    discogsId: 23415,
+    avatarUrl:
+      'https://images-platform.99static.com//85pzSgcGuJohMU2W1ukFHhpfZr0=/0x0:1000x1000/fit-in/500x500/99designs-contests-attachments/89/89981/attachment_89981069',
+    wantsUrl: 'https://discogs.com',
+    collectionUrl: 'https://discogs.com',
   },
 ];
 

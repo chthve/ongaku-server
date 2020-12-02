@@ -11,6 +11,22 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      discogsId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      avatarUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      wantsUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      collectionUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
-      post_title: {
+      postTitle: {
         type: DataTypes.STRING,
         allowNull: false,
       },

@@ -15,7 +15,7 @@ module.exports = {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      post_title: {
+      postTitle: {
         type: DataTypes.STRING,
         allowNull: false,
       },
