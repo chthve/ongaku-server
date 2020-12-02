@@ -21,6 +21,7 @@ exports.createPost = async (req, res) => {
   try {
     const {
       userId,
+      postTitle,
       title,
       artist,
       thumbnail,
@@ -34,6 +35,7 @@ exports.createPost = async (req, res) => {
     const post = await db.Post.create({
       userId,
       channelId,
+      postTitle,
       title,
       artist,
       year,
