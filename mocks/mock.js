@@ -76,6 +76,7 @@ const posts = [
     title: 'E2E4',
     artist: 'Manuel Gottsching',
     year: 1984,
+    label: 'MG.Art',
     body: 'My favorite tune ever',
     thumbnail:
       'https://img.discogs.com/aPGUpMPZGt6kRWSto6JCFeom57I=/fit-in/600x600/filters:strip_ic[…]rgb():quality(90)/discogs-images/R-303333-1290356604.jpeg.jpg',
@@ -86,6 +87,7 @@ const posts = [
     title: 'Bushes',
     artist: 'Markus Nickolai',
     year: 1998,
+    label: 'Perlon',
     body: 'There is someone in the bush',
     thumbnail:
       'https://img.discogs.com/rGc19pz11eLORpHUDqyu7bSRwBg=/fit-in/482x480/filters:strip_ic[…]():quality(90)/discogs-images/R-1765-1390154333-3631.jpeg.jpg',

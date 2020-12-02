@@ -35,6 +35,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      label: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       body: {
         type: DataTypes.TEXT,
         allowNull: false,

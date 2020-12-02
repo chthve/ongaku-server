@@ -53,13 +53,23 @@ const {
     };
 
     const createPost = async (userId, channelId, post) => {
-      const { postTitle, title, artist, year, body, thumbnail, url } = post;
+      const {
+        postTitle,
+        title,
+        artist,
+        year,
+        label,
+        body,
+        thumbnail,
+        url,
+      } = post;
 
       const newPost = await db.Post.create({
         post_title: postTitle,
         userId,
         channelId,
         title,
+        label,
         artist,
         body,
         year,
