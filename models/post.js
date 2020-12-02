@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
+      post_title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       body: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      url: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

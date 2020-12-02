@@ -15,6 +15,10 @@ module.exports = {
         type: DataTypes.UUID,
         allowNull: false,
       },
+      post_title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -33,6 +37,10 @@ module.exports = {
       },
       body: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      url: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       createdAt: {

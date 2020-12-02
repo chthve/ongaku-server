@@ -72,20 +72,25 @@ const tags = [
 
 const posts = [
   {
+    postTitle: 'Classic Tune !',
     title: 'E2E4',
     artist: 'Manuel Gottsching',
     year: 1984,
     body: 'My favorite tune ever',
     thumbnail:
       'https://img.discogs.com/aPGUpMPZGt6kRWSto6JCFeom57I=/fit-in/600x600/filters:strip_ic[…]rgb():quality(90)/discogs-images/R-303333-1290356604.jpeg.jpg',
+    url: 'https://www.discogs.com/fr/Manuel-G%C3%B6ttsching-E2-E4/master/2786',
   },
   {
+    postTitle: 'For thus who misses the bush',
     title: 'Bushes',
     artist: 'Markus Nickolai',
     year: 1998,
     body: 'There is someone in the bush',
     thumbnail:
       'https://img.discogs.com/rGc19pz11eLORpHUDqyu7bSRwBg=/fit-in/482x480/filters:strip_ic[…]():quality(90)/discogs-images/R-1765-1390154333-3631.jpeg.jpg',
+    url:
+      'https://www.discogs.com/fr/Markus-Nikolai-Passion-Bushes/master/512630',
   },
 ];
 
