@@ -51,7 +51,7 @@ exports.savePost = async (req, res) => {
   }
 };
 
-exports.unSavePost = async (req, res) => {
+exports.removeSavePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { postId } = req.body;

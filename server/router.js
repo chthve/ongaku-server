@@ -13,7 +13,7 @@ router
   .route('/users/:id/saved')
   .get(userCtrl.getSavedPosts)
   .post(userCtrl.savePost)
-  .delete(userCtrl.unSavePost);
+  .delete(userCtrl.removeSavePost);
 
 router
   .route('/channels/default')
