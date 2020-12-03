@@ -105,3 +105,17 @@ exports.getChannel = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+exports.getPublicChannels = async (req, res) => {
+  try {
+    const channels = await db.Channel.findAll({
+      where: {
+        private: false,
+      },
+    });
+    res.status(200).send(channels);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
