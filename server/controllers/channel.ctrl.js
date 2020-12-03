@@ -64,6 +64,16 @@ exports.unsubscribeFromChannel = async (req, res) => {
   }
 };
 
+exports.getAllChannels = async (req, res) => {
+  try {
+    const channels = await db.Channel.findAll({});
+    res.status(200).send(channels);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 exports.getDefaultChannels = async (req, res) => {
   try {
     const channels = await db.Channel.findAll({

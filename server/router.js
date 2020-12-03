@@ -36,6 +36,7 @@ router
 router.post('/posts/:channelId', postCtrl.createPost);
 router.post('/posts/:id/comment', commentCtrl.postComment);
 
+router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
 router.get('/channels/:id', channelCtrl.getChannel);
 
