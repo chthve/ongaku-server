@@ -1,10 +1,14 @@
 const router = require('express').Router();
+const passport = require('passport');
 const userCtrl = require('./controllers/user.ctrl');
 const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
 const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
-const { passport } = require('./auth');
+
+const { initialize } = require('./auth');
+
+initialize(passport);
 
 router.get('/users/:id', userCtrl.getUser);
 router.post('/users', userCtrl.createUser);
@@ -37,9 +41,21 @@ router.get('/auth/provider', passport.authenticate('provider'));
 router.get(
   '/auth/provider/callback',
   passport.authenticate('provider', {
-    successRedirect: '/',
-    failureRedirect: '/login',
+    successRedirect: 'http://localhost:3000/authenticated',
+    failureRedirect: '/hello',
   })
 );
+
+router.get('/auth/login/check', (req, res) => {
+  console.log(req.user);
+  if (req.user) {
+    res.json({
+      success: true,
+      message: 'user has successfully authenticated',
+      user: req.user,
+      cookies: req.cookies,
+    });
+  }
+});
 
 module.exports = router;
