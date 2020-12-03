@@ -28,7 +28,6 @@ exports.createPost = async (req, res) => {
       year,
       body,
       label,
-      tags,
     } = req.body;
     const { channelId } = req.params;
 
@@ -44,7 +43,7 @@ exports.createPost = async (req, res) => {
       thumbnail,
     });
 
-    await post.setTags(tags);
+    // await post.setTags(tags);
 
     res.status(201).send(post);
   } catch (error) {
