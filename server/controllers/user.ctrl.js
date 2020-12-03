@@ -22,10 +22,11 @@ exports.getUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { username } = req.body;
+    const { token, tokenSecret } = req.body;
 
     const user = await db.User.create({
-      username,
+      token,
+      tokenSecret,
     });
 
     res.status(201).send(user);
@@ -51,17 +52,16 @@ exports.savePost = async (req, res) => {
   }
 };
 
-exports.unSavePost = async (req, res) => {
+exports.removeSavePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { postId } = req.body;
 
+    const user = await db.User.findByPk(id);
     const post = await db.Post.findByPk(postId);
-    const result = await post.destroy({
-      include: [{ model: db.User, where: { id } }],
-    });
+    await user.removeSaved(post);
 
-    res.status(204).send(result);
+    res.sendStatus(204);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);

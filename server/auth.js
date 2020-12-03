@@ -8,12 +8,13 @@ const initialize = (passport) => {
     try {
       const user = db.User.find({ where: { username } });
       if (user) done(null, user);
-      db.User.create({
+      const newUser = db.User.create({
         id,
         username,
         resource_url,
         saved: [],
       });
+      done(null, newUser);
     } catch (e) {
       done(null, false, e);
     }

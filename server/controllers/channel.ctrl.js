@@ -18,13 +18,13 @@ exports.createChannel = async (req, res) => {
     const { name, isPrivate, parentId } = req.body;
     const channel = await db.Channel.create({
       ownerId: userId,
-      parentId: !!parentId,
+      parentId: parentId || null,
       name,
       private: !!isPrivate,
     });
 
     const user = await db.User.findByPk(userId);
-    await user.setChannels(channel.id);
+    await user.addChannels(channel);
 
     res.status(201).send(channel);
   } catch (error) {
@@ -43,6 +43,21 @@ exports.subscribeToChannels = async (req, res) => {
     const result = await user.setChannels(channelIds);
 
     res.status(201).send(result);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.unsubscribeFromChannel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const channel = req.body;
+
+    const user = await db.User.findByPk(id);
+    await user.removeChannels(channel.id);
+
+    res.sendStatus(204);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -85,6 +100,29 @@ exports.getChannel = async (req, res) => {
     const { length } = users[0].dataValues.Users;
 
     res.status(200).send({ users: length, channel });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.getPublicChannels = async (req, res) => {
+  try {
+    const { name } = req.query;
+
+    const filter = {
+      private: false,
+    };
+
+    if (name) {
+      filter.name = name;
+    }
+
+    const channels = await db.Channel.findAll({
+      where: filter,
+    });
+
+    res.status(200).send(channels);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
