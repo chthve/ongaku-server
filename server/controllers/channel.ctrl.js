@@ -151,3 +151,18 @@ exports.getPublicChannels = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+exports.deletePrivateChannel = async (req, res) => {
+  try {
+    // const { id } = req.params;
+
+    await db.Channel.destroy({
+      where: {},
+    });
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
