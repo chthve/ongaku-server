@@ -24,7 +24,11 @@ router.post('/channels/:userId', channelCtrl.createChannel);
 
 router.post('/users/:id/channels', channelCtrl.subscribeToChannels);
 
-router.route('/posts/:id').get(postCtrl.getPost).delete(postCtrl.deletePost);
+router
+  .route('/posts/:id')
+  .get(postCtrl.getPost)
+  .patch(postCtrl.updatePost)
+  .delete(postCtrl.deletePost);
 
 router.post('/posts/:channelId', postCtrl.createPost);
 router.post('/posts/:id/comment', commentCtrl.postComment);

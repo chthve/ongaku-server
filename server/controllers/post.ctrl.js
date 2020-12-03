@@ -72,7 +72,8 @@ exports.updatePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId, postTitle, body } = req.body;
-    res.status(201).send('hello');
+    await db.Post.update({ postTitle, body }, { where: { id, userId } });
+    res.sendStatus(204);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
