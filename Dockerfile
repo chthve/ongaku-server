@@ -1,11 +1,13 @@
 FROM node:12
 
-WORKDIR /app
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY package*.json ./
-
+# Install app dependencies
+COPY package*.json /usr/src/app/
 RUN npm install
 
 COPY . .
 
-CMD ["node", "dev"]
+CMD ["node", "server/server.js"]

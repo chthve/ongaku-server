@@ -108,11 +108,20 @@ exports.getChannel = async (req, res) => {
 
 exports.getPublicChannels = async (req, res) => {
   try {
+    const { name } = req.query;
+
+    const filter = {
+      private: false,
+    };
+
+    if (name) {
+      filter.name = name;
+    }
+
     const channels = await db.Channel.findAll({
-      where: {
-        private: false,
-      },
+      where: filter,
     });
+
     res.status(200).send(channels);
   } catch (error) {
     console.error(error);
