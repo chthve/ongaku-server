@@ -22,10 +22,11 @@ exports.getUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { username } = req.body;
+    const { token, tokenSecret } = req.body;
 
     const user = await db.User.create({
-      username,
+      token,
+      tokenSecret,
     });
 
     res.status(201).send(user);

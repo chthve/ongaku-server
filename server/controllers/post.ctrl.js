@@ -28,6 +28,7 @@ exports.createPost = async (req, res) => {
       year,
       body,
       label,
+      url,
     } = req.body;
     const { channelId } = req.params;
 
@@ -41,11 +42,37 @@ exports.createPost = async (req, res) => {
       label,
       body,
       thumbnail,
+      url,
     });
 
     // await post.setTags(tags);
 
     res.status(201).send(post);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+    await db.Post.destroy({
+      where: { id, userId },
+    });
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId, postTitle, body } = req.body;
+    res.status(201).send('hello');
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
