@@ -49,6 +49,21 @@ exports.subscribeToChannels = async (req, res) => {
   }
 };
 
+exports.unsubscribeFromChannel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const channel = req.body;
+
+    const user = await db.User.findByPk(id);
+    await user.removeChannels(channel.id);
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 exports.getDefaultChannels = async (req, res) => {
   try {
     const channels = await db.Channel.findAll({

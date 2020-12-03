@@ -22,7 +22,10 @@ router
 
 router.post('/channels/:userId', channelCtrl.createChannel);
 
-router.post('/users/:id/channels', channelCtrl.subscribeToChannels);
+router
+  .route('/users/:id/channels')
+  .post(channelCtrl.subscribeToChannels)
+  .delete(channelCtrl.unsubscribeFromChannel);
 
 router
   .route('/posts/:id')
