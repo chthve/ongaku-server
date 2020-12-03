@@ -24,7 +24,7 @@ exports.createChannel = async (req, res) => {
     });
 
     const user = await db.User.findByPk(userId);
-    await user.setChannels(channel.id);
+    await user.addChannels(channel);
 
     res.status(201).send(channel);
   } catch (error) {
