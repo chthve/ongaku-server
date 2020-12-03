@@ -16,6 +16,19 @@ exports.createChannel = async (req, res) => {
   try {
     const { userId } = req.params;
     const { name, isPrivate, parentId } = req.body;
+
+    if (!isPrivate) {
+      const queryChannel = await db.Channel.findOne({
+        where: {
+          name,
+        },
+      });
+
+      if (queryChannel) {
+        res.status(409).send('Channel already exists!');
+      }
+    }
+
     const channel = await db.Channel.create({
       ownerId: userId,
       parentId: parentId || null,
