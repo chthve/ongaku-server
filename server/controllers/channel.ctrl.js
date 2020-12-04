@@ -152,17 +152,22 @@ exports.getPublicChannels = async (req, res) => {
   }
 };
 
-// exports.deletePrivateChannel = async (req, res) => {
-//   try {
-//     // const { id } = req.params;
+exports.deletePrivateChannel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { ownerId } = req.body;
 
-//     await db.Channel.destroy({
-//       where: {},
-//     });
+    await db.Channel.destroy({
+      where: {
+        id,
+        ownerId,
+        private: true,
+      },
+    });
 
-//     res.sendStatus(204);
-//   } catch (error) {
-//     console.error(error);
-//     res.sendStatus(500);
-//   }
-// };
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};

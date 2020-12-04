@@ -41,10 +41,13 @@ router
 
 router.post('/channels/:userId', channelCtrl.createChannel);
 
+router
+  .route('/channels/:id')
+  .get(channelCtrl.getChannel)
+  .delete(channelCtrl.deletePrivateChannel);
+
 router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
-router.get('/channels/:id', channelCtrl.getChannel);
-router.get('/channels/private/:channelId', channelCtrl.deletePrivateChannel);
 
 router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
