@@ -10,7 +10,8 @@ const { initialize } = require('./auth');
 
 initialize(passport);
 
-router.get('/users/:id', userCtrl.getUser);
+router.route('/users/:id').get(userCtrl.getUser).delete(userCtrl.deleteUser);
+
 router.post('/users', userCtrl.createUser);
 
 router
@@ -51,14 +52,13 @@ router.get(
   '/auth/provider/callback',
   passport.authenticate('provider', {
     successRedirect: 'http://localhost:3000/authenticated',
-    failureRedirect: '/hello',
+    failureRedirect: 'http://localhost:3000/',
   })
 );
 
 router.get('/auth/login/check', (req, res) => {
-  console.log(req.user);
   if (req.user) {
-    res.json({
+    res.send({
       success: true,
       message: 'user has successfully authenticated',
       user: req.user,

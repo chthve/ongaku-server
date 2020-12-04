@@ -9,7 +9,6 @@ exports.getUser = async (req, res) => {
       include: [
         { model: db.Post, as: 'posts' },
         { model: db.Channel, as: 'channels' },
-        { model: db.Comment, as: 'comments' },
       ],
     });
 
@@ -32,6 +31,17 @@ exports.createUser = async (req, res) => {
     res.status(201).send(user);
   } catch (error) {
     console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.User.destroy({ where: { id } });
+    res.sendStatus(204);
+  } catch (e) {
+    console.error(e);
     res.sendStatus(500);
   }
 };

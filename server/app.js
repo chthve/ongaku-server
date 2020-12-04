@@ -2,16 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
-const app = require('https-localhost')();
 const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const router = require('./router');
-const { initialize } = require('./auth');
 
-// const app = express();
+const app = express();
 
-initialize(passport);
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['ongaku'],
+    maxAge: 100000000,
+  })
+);
+app.use(cookieParser());
 app.use(morgan());
-app.use(cors());
 app.use(
   session({
     secret: 'keyboard cat',
@@ -20,6 +26,13 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT.PATCH,POST,DELETE',
+    credentials: true,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 

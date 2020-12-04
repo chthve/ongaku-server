@@ -1,22 +1,33 @@
 const { Strategy } = require('passport-discogs');
-const fetch = require('node-fetch');
 const db = require('../models');
 
 const initialize = (passport) => {
-  function authenticateUser(token, tokenSecret, profile, done) {
+  async function authenticateUser(token, tokenSecret, profile, done) {
     const { id, username, resource_url } = profile._json;
     try {
-      const user = db.User.find({ where: { username } });
-      if (user) done(null, user);
-      const newUser = db.User.create({
-        id,
-        username,
-        resource_url,
-        saved: [],
+      const user = await db.User.findByPk(id, {
+        include: [
+          { model: db.Post, as: 'posts' },
+          { model: db.Channel, as: 'channels' },
+        ],
       });
-      done(null, newUser);
+      if (user) {
+        // update a user as it may have a different token or id
+        done(null, user);
+      } else {
+        const newUser = await db.User.create({
+          id,
+          username,
+          token,
+          tokenSecret,
+          resourceUrl: resource_url,
+        });
+        newUser.posts = [];
+        newUser.channels = [];
+        done(null, newUser);
+      }
     } catch (e) {
-      done(null, false, e);
+      done(true, false, e);
     }
   }
   passport.use(
@@ -34,15 +45,11 @@ const initialize = (passport) => {
     )
   );
   passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user);
   });
 
-  passport.deserializeUser(function (id, done) {
-    db.User.find({ where: { id } })
-      .then((user) => {
-        done(null, user);
-      })
-      .catch((err) => done(err.message));
+  passport.deserializeUser(function (user, done) {
+    done(null, user);
   });
 };
 
