@@ -16,13 +16,6 @@ router
   .delete(userCtrl.removeSavePost);
 
 router
-  .route('/channels/default')
-  .get(channelCtrl.getDefaultChannels)
-  .post(channelCtrl.createDefaultChannels);
-
-router.post('/channels/:userId', channelCtrl.createChannel);
-
-router
   .route('/users/:id/channels')
   .post(channelCtrl.subscribeToChannels)
   .delete(channelCtrl.unsubscribeFromChannel);
@@ -36,8 +29,17 @@ router
 router.post('/posts/:channelId', postCtrl.createPost);
 router.post('/posts/:id/comment', commentCtrl.postComment);
 
+router
+  .route('/channels/default')
+  .get(channelCtrl.getDefaultChannels)
+  .post(channelCtrl.createDefaultChannels);
+
+router.post('/channels/:userId', channelCtrl.createChannel);
+
+router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
 router.get('/channels/:id', channelCtrl.getChannel);
+router.get('/channels/private/:channelId', channelCtrl.deletePrivateChannel);
 
 router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
