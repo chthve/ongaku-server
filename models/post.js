@@ -5,8 +5,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ User, Channel, Comment, Tag }) {
       this.belongsTo(User, { foreignKey: 'userId', as: 'user' });
       this.belongsToMany(User, { through: 'users_posts' });
-      this.belongsTo(Channel, { foreignKey: 'channelId', as: 'channel' });
-      this.hasMany(Comment, { foreignKey: 'postId', as: 'comments' });
+      this.belongsTo(Channel, {
+        foreignKey: { name: 'channelId', allowNull: false },
+        as: 'channel',
+        onDelete: 'cascade',
+        hooks: true,
+      });
+      this.hasMany(Comment, {
+        foreignKey: 'postId',
+        as: 'comments',
+      });
       this.belongsToMany(Tag, { through: 'posts_tags', as: 'tags' });
     }
   }
