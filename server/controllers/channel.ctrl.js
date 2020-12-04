@@ -16,6 +16,19 @@ exports.createChannel = async (req, res) => {
   try {
     const { userId } = req.params;
     const { name, isPrivate, parentId } = req.body;
+
+    if (!isPrivate) {
+      const queryChannel = await db.Channel.findOne({
+        where: {
+          name,
+        },
+      });
+
+      if (queryChannel) {
+        res.status(409).send('Channel already exists!');
+      }
+    }
+
     const channel = await db.Channel.create({
       ownerId: userId,
       parentId: parentId || null,
@@ -58,6 +71,16 @@ exports.unsubscribeFromChannel = async (req, res) => {
     await user.removeChannels(channel.id);
 
     res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.getAllChannels = async (req, res) => {
+  try {
+    const channels = await db.Channel.findAll({});
+    res.status(200).send(channels);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -128,3 +151,18 @@ exports.getPublicChannels = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+// exports.deletePrivateChannel = async (req, res) => {
+//   try {
+//     // const { id } = req.params;
+
+//     await db.Channel.destroy({
+//       where: {},
+//     });
+
+//     res.sendStatus(204);
+//   } catch (error) {
+//     console.error(error);
+//     res.sendStatus(500);
+//   }
+// };
