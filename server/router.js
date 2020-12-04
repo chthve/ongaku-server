@@ -43,20 +43,14 @@ router
 
 router.post('/channels/:userId', channelCtrl.createChannel);
 
+
+router.get('/channels', channelCtrl.getAllChannels);
+router.get('/channels/public', channelCtrl.getPublicChannels);
+router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 router
   .route('/channels/:id')
   .get(channelCtrl.getChannel)
   .delete(channelCtrl.deletePrivateChannel);
-
-router.get('/channels', channelCtrl.getAllChannels);
-router.get('/channels/public', channelCtrl.getPublicChannels);
-<<<<<<< HEAD
-router.get('/channels/:id', channelCtrl.getChannel);
-// router.get('/channels/private/:channelId', channelCtrl.deletePrivateChannel);
-=======
->>>>>>> 6568bac0c7efb99a11e4f98851f3feb8e79f27bb
-
-router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
 router.get('/auth/provider', passport.authenticate('provider'));
 
