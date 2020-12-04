@@ -6,8 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, { foreignKey: 'userId', as: 'user' });
       this.belongsToMany(User, { through: 'users_posts' });
       this.belongsTo(Channel, {
-        foreignKey: { name: 'channelId', allowNull: false },
-        as: 'channel',
+        foreignKey: { name: 'channelId', as: 'posts' },
         onDelete: 'cascade',
         hooks: true,
       });

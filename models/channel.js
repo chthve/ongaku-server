@@ -6,12 +6,18 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(User, {
         through: 'users_channels',
       });
-      this.hasMany(Post, { foreignKey: 'channelId', as: 'posts' });
+      this.hasMany(Post, {
+        foreignKey: 'channelId',
+        as: 'posts',
+        onDelete: 'cascade',
+      });
       this.hasMany(this, {
         as: 'subChannel',
-        foreignKey: 'parentId',
+        foreignKey: { name: 'parentId' },
         sourceKey: 'id',
         useJunctionTable: false,
+        onDelete: 'cascade',
+        hooks: true,
       });
     }
   }

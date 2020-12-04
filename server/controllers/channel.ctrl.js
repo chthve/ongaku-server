@@ -164,7 +164,6 @@ exports.deletePrivateChannel = async (req, res) => {
         private: true,
       },
     });
-
     res.sendStatus(204);
   } catch (error) {
     console.error(error);
