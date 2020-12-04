@@ -17,19 +17,19 @@ const {
 
     const user1 = await db.User.findOne({
       where: {
-        token: 'qdkfjhqlrufhpaibdv',
+        username: 'Baiju',
       },
     });
 
     const user2 = await db.User.findOne({
       where: {
-        token: 'fmlqsljqdsfvmrj',
+        username: 'Gui',
       },
     });
 
     const user3 = await db.User.findOne({
       where: {
-        token: 'jqmlfkjdsflqjfl',
+        username: 'George',
       },
     });
 

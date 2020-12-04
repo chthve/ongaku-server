@@ -1,15 +1,24 @@
 const users = [
   {
+    id: '24435',
+    username: 'Baiju',
     token: 'qdkfjhqlrufhpaibdv',
-    tokenSecret: 'qljmndfbvqrtnm',
+    tokenSecret: 'qlfkjqdmlvqdfbvqm',
+    resourceUrl: 'https://discogs.com',
   },
   {
-    token: 'fmlqsljqdsfvmrj',
-    tokenSecret: 'qljmndfbvqrtqfoùksdfonm',
+    id: '247835',
+    username: 'Gui',
+    token: 'sdjfqm',
+    tokenSecret: 'fsiqljm',
+    resourceUrl: 'https://discogs.com',
   },
   {
-    token: 'jqmlfkjdsflqjfl',
-    tokenSecret: 'qepfioameiopfsdo',
+    id: '143256',
+    username: 'George',
+    token: 'qfdkhlfkqh',
+    tokenSecret: 'qlfkjqdmfqjsdvblvqdfbvqm',
+    resourceUrl: 'https://discogs.com',
   },
 ];
 
