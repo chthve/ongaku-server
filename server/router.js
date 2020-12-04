@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const db = require('../models/index');
 const userCtrl = require('./controllers/user.ctrl');
 const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
@@ -44,7 +45,7 @@ router.post('/channels/:userId', channelCtrl.createChannel);
 router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
 router.get('/channels/:id', channelCtrl.getChannel);
-router.get('/channels/private/:channelId', channelCtrl.deletePrivateChannel);
+// router.get('/channels/private/:channelId', channelCtrl.deletePrivateChannel);
 
 router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
@@ -58,12 +59,18 @@ router.get(
   })
 );
 
-router.get('/auth/login/check', (req, res) => {
+router.get('/auth/login/check', async (req, res) => {
   if (req.user) {
+    const dbUser = await db.User.findByPk(req.user.id, {
+      include: [
+        { model: db.Post, as: 'posts' },
+        { model: db.Channel, as: 'channels' },
+      ],
+    });
     res.send({
       success: true,
       message: 'user has successfully authenticated',
-      user: req.user,
+      user: dbUser,
       cookies: req.cookies,
     });
   }
