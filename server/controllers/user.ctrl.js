@@ -21,9 +21,12 @@ exports.getUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { token, tokenSecret } = req.body;
+    const { id, username, resourceUrl, token, tokenSecret } = req.body;
 
     const user = await db.User.create({
+      id,
+      username,
+      resourceUrl,
       token,
       tokenSecret,
     });

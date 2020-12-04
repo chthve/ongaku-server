@@ -41,7 +41,10 @@ router
   .get(channelCtrl.getDefaultChannels)
   .post(channelCtrl.createDefaultChannels);
 
-router.post('/channels/:userId', channelCtrl.createChannel);
+router
+  .route('/channels/users/:userId')
+  .post(channelCtrl.createChannel)
+  .delete(channelCtrl.deleteAllChannelsFromUser);
 
 
 router.get('/channels', channelCtrl.getAllChannels);

@@ -11,10 +11,6 @@ module.exports = {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      postId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
       body: {
         type: DataTypes.TEXT,
         allowNull: false,

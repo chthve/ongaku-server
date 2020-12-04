@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
       },
       ownerId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         defaultValue: null,
       },
       private: {
