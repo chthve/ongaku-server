@@ -32,8 +32,11 @@ router
   .delete(postCtrl.deletePost);
 
 router.post('/posts/:channelId', postCtrl.createPost);
-router.post('/posts/:id/comment', commentCtrl.postComment);
-router.delete('/posts/:id/comment/:commentId', commentCtrl.deleteComment);
+
+router
+  .route('/posts/:id/comment')
+  .post(commentCtrl.postComment)
+  .delete(commentCtrl.deleteComment);
 
 router
   .route('/channels/default')

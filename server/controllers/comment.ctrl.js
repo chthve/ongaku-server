@@ -20,8 +20,8 @@ exports.postComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
-    const { id, commentId } = req.params;
-    const { userId } = req.body;
+    const { id } = req.params;
+    const { userId, commentId } = req.body;
     await db.Comment.destroy({
       where: {
         id: commentId,
