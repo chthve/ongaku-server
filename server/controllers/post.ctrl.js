@@ -31,10 +31,10 @@ exports.createPost = async (req, res) => {
       url,
     } = req.body;
     const { channelId } = req.params;
+    const channel = await db.Channel.findByPk(channelId);
 
     const post = await db.Post.create({
       userId,
-      channelId,
       postTitle,
       title,
       artist,
@@ -44,6 +44,8 @@ exports.createPost = async (req, res) => {
       thumbnail,
       url,
     });
+
+    await channel.addPosts(post);
 
     // await post.setTags(tags);
 

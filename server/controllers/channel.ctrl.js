@@ -164,7 +164,23 @@ exports.deletePrivateChannel = async (req, res) => {
         private: true,
       },
     });
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
 
+exports.deleteAllChannelsFromUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    await db.Channel.destroy({
+      where: {
+        ownerId: userId,
+        private: true,
+      },
+    });
     res.sendStatus(204);
   } catch (error) {
     console.error(error);

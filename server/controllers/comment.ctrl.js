@@ -5,11 +5,12 @@ exports.postComment = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId, body } = req.body;
+    const post = await db.Post.findByPk(id);
     const comment = await db.Comment.create({
-      postId: id,
       userId,
       body,
     });
+    await post.addComments(comment);
     res.status(201).send(comment);
   } catch (error) {
     console.error(error);

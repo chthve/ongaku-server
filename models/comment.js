@@ -3,8 +3,12 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     static associate({ User, Post }) {
-      this.belongsTo(User, { foreignKey: 'userId' });
-      this.belongsTo(Post, { foreignKey: 'postId' });
+      this.belongsTo(User, { foreignKey: 'userId', onDelete: 'cascade' });
+      this.belongsTo(Post, {
+        foreignKey: { name: 'postId', as: 'comments' },
+        onDelete: 'cascade',
+        hooks: true,
+      });
     }
   }
   Comment.init(

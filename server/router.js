@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const db = require('../models/index');
 const userCtrl = require('./controllers/user.ctrl');
 const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
@@ -41,17 +42,19 @@ router
   .get(channelCtrl.getDefaultChannels)
   .post(channelCtrl.createDefaultChannels);
 
-router.post('/channels/:userId', channelCtrl.createChannel);
+router
+  .route('/channels/users/:userId')
+  .post(channelCtrl.createChannel)
+  .delete(channelCtrl.deleteAllChannelsFromUser);
 
+
+router.get('/channels', channelCtrl.getAllChannels);
+router.get('/channels/public', channelCtrl.getPublicChannels);
+router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 router
   .route('/channels/:id')
   .get(channelCtrl.getChannel)
   .delete(channelCtrl.deletePrivateChannel);
-
-router.get('/channels', channelCtrl.getAllChannels);
-router.get('/channels/public', channelCtrl.getPublicChannels);
-
-router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
 router.get('/auth/provider', passport.authenticate('provider'));
 
