@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
 const { Strategy } = require('passport-discogs');
 const db = require('../models');
 
@@ -40,11 +42,11 @@ const discogStrategy = new Strategy(
 
 const initialize = (passport) => {
   passport.use('provider', discogStrategy);
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function (id, done) {
+  passport.deserializeUser((id, done) => {
     db.User.findByPk(id)
       .then((user) => {
         done(null, user);

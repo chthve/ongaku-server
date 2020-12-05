@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { discogStrategy } = require('../auth');
 
 const { _oauth } = discogStrategy;
@@ -6,7 +7,7 @@ const BASE_URL = 'https://api.discogs.com/';
 
 exports.getFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
-  _oauth.get(BASE_URL + url, token, tokenSecret, (err, body, r) => {
+  _oauth.get(BASE_URL + url, token, tokenSecret, (err, body) => {
     if (err) {
       res.status(400).send(err);
     }
