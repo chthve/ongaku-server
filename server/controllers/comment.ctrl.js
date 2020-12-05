@@ -1,10 +1,19 @@
 /* eslint-disable no-console */
 const db = require('../../models');
+const ApiError = require('../utils/apiError');
 
-exports.postComment = async (req, res) => {
+exports.postComment = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { userId, body } = req.body;
+
+    const user = await db.User.findByPk(userId);
+
+    if (!user) {
+      next(ApiError.notFound('No user found with that id'));
+      return;
+    }
+
     const post = await db.Post.findByPk(id);
     const comment = await db.Comment.create({
       userId,
