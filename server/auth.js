@@ -1,59 +1,61 @@
 const { Strategy } = require('passport-discogs');
 const db = require('../models');
 
-const initialize = (passport) => {
-  async function authenticateUser(token, tokenSecret, profile, done) {
-    const { id, username, resource_url } = profile._json;
-    try {
-      const user = await db.User.findByPk(id, {
-        include: [
-          { model: db.Post, as: 'posts' },
-          { model: db.Channel, as: 'channels' },
-        ],
+async function authenticateUser(token, tokenSecret, profile, done) {
+  const { id, username, resource_url } = profile._json;
+  try {
+    const user = await db.User.findByPk(id);
+    if (user) {
+      user.token = token;
+      user.tokenSecret = tokenSecret;
+      await user.save();
+      done(null, user);
+    } else {
+      const newUser = await db.User.create({
+        id,
+        username,
+        token,
+        tokenSecret,
+        resourceUrl: resource_url,
       });
-      if (user) {
-        // update a user as it may have a different token or id
-        done(null, user);
-      } else {
-        const newUser = await db.User.create({
-          id,
-          username,
-          token,
-          tokenSecret,
-          resourceUrl: resource_url,
-        });
-        newUser.posts = [];
-        newUser.channels = [];
-        console.log('new user', newUser)
-        done(null, newUser);
-      }
-    } catch (e) {
-      done(true, false, e);
+
+      done(null, newUser);
     }
+  } catch (e) {
+    done(true, false, e);
   }
-  passport.use(
-    'provider',
-    new Strategy(
-      {
-        requestTokenURL: 'https://api.discogs.com/oauth/request_token',
-        accessTokenURL: 'https://api.discogs.com/oauth/access_token',
-        userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
-        consumerKey: 'hOqgGkAKtjmfpFYvNhjb',
-        consumerSecret: 'vgbWmkBoIOkDSxQOeuJFCqIMOBPSuiUf',
-        callbackURL: '/auth/provider/callback',
-      },
-      authenticateUser
-    )
-  );
+}
+
+const discogStrategy = new Strategy(
+  {
+    requestTokenURL: 'https://api.discogs.com/oauth/request_token',
+    accessTokenURL: 'https://api.discogs.com/oauth/access_token',
+    userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
+    consumerKey: 'hOqgGkAKtjmfpFYvNhjb',
+    consumerSecret: 'vgbWmkBoIOkDSxQOeuJFCqIMOBPSuiUf',
+    callbackURL: '/auth/provider/callback',
+  },
+  authenticateUser
+);
+
+const initialize = (passport) => {
+  passport.use('provider', discogStrategy);
   passport.serializeUser(function (user, done) {
-    done(null, user);
+    done(null, user.id);
   });
 
-  passport.deserializeUser(function (user, done) {
-    done(null, user);
+  passport.deserializeUser(function (id, done) {
+    db.User.findByPk(id)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((e) => {
+        done(true, null, e);
+      });
   });
 };
 
 module.exports = {
   initialize,
+  discogStrategy,
 };

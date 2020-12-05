@@ -6,6 +6,7 @@ const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
 const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
+const authCtrl = require('./controllers/auth.ctrl');
 
 const { initialize } = require('./auth');
 
@@ -68,6 +69,7 @@ router.get(
 );
 
 router.get('/auth/login/check', async (req, res) => {
+  // console.log(req.user, 'sausage');
   if (req.user) {
     const dbUser = await db.User.findByPk(req.user.id, {
       include: [
@@ -75,6 +77,7 @@ router.get('/auth/login/check', async (req, res) => {
         { model: db.Channel, as: 'channels' },
       ],
     });
+    // console.log(dbUser);
     res.send({
       success: true,
       message: 'user has successfully authenticated',
@@ -83,5 +86,7 @@ router.get('/auth/login/check', async (req, res) => {
     });
   }
 });
+
+router.post('/discogs/get', authCtrl.getFromDiscogs);
 
 module.exports = router;
