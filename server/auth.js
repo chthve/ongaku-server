@@ -24,7 +24,7 @@ const initialize = (passport) => {
         });
         newUser.posts = [];
         newUser.channels = [];
-        console.log('new user', newUser)
+        console.log('new user', newUser);
         done(null, newUser);
       }
     } catch (e) {
