@@ -8,7 +8,6 @@ const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
 
 const { initialize } = require('./auth');
-const db = require('../models');
 
 initialize(passport);
 
@@ -49,7 +48,6 @@ router
   .route('/channels/users/:userId')
   .post(channelCtrl.createChannel)
   .delete(channelCtrl.deleteAllChannelsFromUser);
-
 
 router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
