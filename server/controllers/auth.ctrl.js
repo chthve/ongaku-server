@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { discogStrategy } = require('../auth');
 
 const { _oauth } = discogStrategy;
@@ -6,13 +7,11 @@ const BASE_URL = 'https://api.discogs.com';
 
 exports.getFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
-
-  _oauth.get(BASE_URL + url, token, tokenSecret, (err, body, r) => {
+  _oauth.get(BASE_URL + url, token, tokenSecret, (err, body) => {
     if (err) {
       res.status(400).send(err);
     }
-    const json = JSON.parse(body);
-    res.status(200).send(json);
+    res.status(200).send(body);
   });
 };
 
@@ -25,13 +24,11 @@ exports.postToDiscogs = (req, res) => {
     tokenSecret,
     postBody,
     postContentType,
-    (err, body, r) => {
+    (err, body) => {
       if (err) {
         res.status(400).send(err);
       }
-      const json = JSON.parse(body);
-
-      res.status(200).send(json);
+      res.status(200).send(body);
     }
   );
 };
@@ -45,19 +42,18 @@ exports.putToDiscogs = (req, res) => {
     tokenSecret,
     postBody,
     postContentType,
-    (err, body, r) => {
+    (err, body) => {
       if (err) {
         res.status(400).send(err);
       }
-      const json = JSON.parse(body);
-      res.status(200).send(json);
+      res.status(200).send(body);
     }
   );
 };
 
 exports.deleteFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
-  _oauth.delete(BASE_URL + url, token, tokenSecret, (err, body, r) => {
+  _oauth.delete(BASE_URL + url, token, tokenSecret, (err) => {
     if (err) {
       res.status(400).send(err);
     }
