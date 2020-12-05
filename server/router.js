@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const db = require('../models/index');
 const userCtrl = require('./controllers/user.ctrl');
 const postCtrl = require('./controllers/post.ctrl');
 const channelCtrl = require('./controllers/channel.ctrl');
@@ -7,6 +8,7 @@ const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
 
 const { initialize } = require('./auth');
+const db = require('../models');
 
 initialize(passport);
 
@@ -48,15 +50,14 @@ router
   .post(channelCtrl.createChannel)
   .delete(channelCtrl.deleteAllChannelsFromUser);
 
+
+router.get('/channels', channelCtrl.getAllChannels);
+router.get('/channels/public', channelCtrl.getPublicChannels);
+router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 router
   .route('/channels/:id')
   .get(channelCtrl.getChannel)
   .delete(channelCtrl.deletePrivateChannel);
-
-router.get('/channels', channelCtrl.getAllChannels);
-router.get('/channels/public', channelCtrl.getPublicChannels);
-
-router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
 router.get('/auth/provider', passport.authenticate('provider'));
 
@@ -68,12 +69,18 @@ router.get(
   })
 );
 
-router.get('/auth/login/check', (req, res) => {
+router.get('/auth/login/check', async (req, res) => {
   if (req.user) {
+    const dbUser = await db.User.findByPk(req.user.id, {
+      include: [
+        { model: db.Post, as: 'posts' },
+        { model: db.Channel, as: 'channels' },
+      ],
+    });
     res.send({
       success: true,
       message: 'user has successfully authenticated',
-      user: req.user,
+      user: dbUser,
       cookies: req.cookies,
     });
   }
