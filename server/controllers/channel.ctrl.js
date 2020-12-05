@@ -53,10 +53,13 @@ exports.subscribeToChannels = async (req, res) => {
 
     const channelIds = channels.map((channel) => channel.id);
     const user = await db.User.findByPk(id);
-    const result = await user.setChannels(channelIds);
-    console.log(result);
-
-    res.status(201).send(result);
+    await user.setChannels(channelIds);
+    const subscribedChannels = await db.Channel.findAll({
+      where: {
+        id: channelIds,
+      },
+    });
+    res.status(201).send(subscribedChannels);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
