@@ -7,6 +7,7 @@ const commentCtrl = require('./controllers/comment.ctrl');
 const tagCtrl = require('./controllers/tag.ctrl');
 
 const { initialize } = require('./auth');
+const db = require('../models');
 
 initialize(passport);
 
@@ -62,12 +63,18 @@ router.get(
   })
 );
 
-router.get('/auth/login/check', (req, res) => {
+router.get('/auth/login/check', async (req, res) => {
   if (req.user) {
+    const dbUser = await db.User.findByPk(req.user.id, {
+      include: [
+        { model: db.Post, as: 'posts' },
+        { model: db.Channel, as: 'channels' },
+      ],
+    });
     res.send({
       success: true,
       message: 'user has successfully authenticated',
-      user: req.user,
+      user: dbUser,
       cookies: req.cookies,
     });
   }
