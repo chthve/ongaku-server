@@ -88,5 +88,8 @@ router.get('/auth/login/check', async (req, res) => {
 });
 
 router.post('/discogs/get', authCtrl.getFromDiscogs);
+router.post('/discogs/post', authCtrl.postToDiscogs);
+router.post('/discogs/put', authCtrl.putToDiscogs);
+router.post('/discogs/delete', authCtrl.deleteFromDiscogs);
 
 module.exports = router;
