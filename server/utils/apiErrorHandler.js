@@ -6,6 +6,10 @@ function apiErrorHandler(err, req, res, next) {
     res.status(err.code).send(err.message);
   }
 
+  if (err.name === 'SequelizeDatabaseError') {
+    res.status(400).send('Entity does not exist!');
+  }
+
   res.status(500).send('Something went wrong!');
 }
 
