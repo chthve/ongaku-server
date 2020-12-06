@@ -46,7 +46,7 @@ router
   .post(channelCtrl.createDefaultChannels);
 
 router
-  .route('/channels/users/:userId')
+  .route('/achannels/users/:userId')
   .post(channelCtrl.createChannel)
   .delete(channelCtrl.deleteAllChannelsFromUser);
 
@@ -69,7 +69,6 @@ router.get(
 );
 
 router.get('/auth/login/check', async (req, res) => {
-  // console.log(req.user, 'sausage');
   if (req.user) {
     const dbUser = await db.User.findByPk(req.user.id, {
       include: [
@@ -77,7 +76,7 @@ router.get('/auth/login/check', async (req, res) => {
         { model: db.Channel, as: 'channels' },
       ],
     });
-    // console.log(dbUser);
+
     res.send({
       success: true,
       message: 'user has successfully authenticated',

@@ -21,7 +21,7 @@ exports.createChannel = async (req, res, next) => {
     const user = await db.User.findByPk(userId);
 
     if (!user) {
-      next(ApiError.notFound('No user found with that id'));
+      next(ApiError.badRequest('No user found with that id'));
       return;
     }
 
@@ -33,7 +33,7 @@ exports.createChannel = async (req, res, next) => {
       });
 
       if (queryChannel) {
-        next(ApiError.duplicate('Channel already exists!'));
+        next(ApiError.conflict('Channel already exists!'));
         return;
       }
     }
@@ -55,32 +55,67 @@ exports.createChannel = async (req, res, next) => {
   }
 };
 
-exports.subscribeToChannels = async (req, res) => {
+exports.subscribeToChannels = async (req, res, next) => {
   try {
     const { id } = req.params;
     const channels = req.body;
 
     const channelIds = channels.map((channel) => channel.id);
     const user = await db.User.findByPk(id);
-    await user.setChannels(channelIds);
-    const subscribedChannels = await db.Channel.findAll({
+
+    if (!user) {
+      next(ApiError.badRequest('No user found with that id'));
+      return;
+    }
+
+    const alreadySubscribed = await user.getChannels();
+
+    const checkIfAlreadySubscribed = (existingChannels, newChannel) => {
+      return existingChannels.some((channel) => channel.id === newChannel[0]);
+    };
+
+    if (checkIfAlreadySubscribed(alreadySubscribed, channelIds)) {
+      next(ApiError.conflict('You already subcribed to that channel'));
+      return;
+    }
+
+    await user.addChannels(channelIds);
+
+    const newlySubscribedChannels = await db.Channel.findAll({
       where: {
         id: channelIds,
       },
     });
-    res.status(201).send(subscribedChannels);
+    res.status(201).send(newlySubscribedChannels);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
   }
 };
 
-exports.unsubscribeFromChannel = async (req, res) => {
+exports.unsubscribeFromChannel = async (req, res, next) => {
   try {
     const { id } = req.params;
     const channel = req.body;
 
     const user = await db.User.findByPk(id);
+
+    if (!user) {
+      next(ApiError.badRequest('No user found with that id'));
+      return;
+    }
+
+    const alreadySubscribed = await user.getChannels();
+
+    const checkIfAlreadySubscribed = (existingChannels, newChannel) => {
+      return existingChannels.some((ch) => ch.id === newChannel.id);
+    };
+
+    if (!checkIfAlreadySubscribed(alreadySubscribed, channel)) {
+      next(ApiError.badRequest('You are not subscribed to this channel'));
+      return;
+    }
+
     await user.removeChannels(channel.id);
 
     res.sendStatus(204);
@@ -115,7 +150,7 @@ exports.getDefaultChannels = async (req, res) => {
   }
 };
 
-exports.getChannel = async (req, res) => {
+exports.getChannel = async (req, res, next) => {
   try {
     const { id } = req.params;
     const channel = await db.Channel.findByPk(id, {
@@ -125,17 +160,15 @@ exports.getChannel = async (req, res) => {
       ],
     });
 
-    const users = await db.Channel.findAll({
-      include: [
-        {
-          model: db.User,
-        },
-      ],
-    });
+    // need to handle error when id is shorter
+    if (!channel) {
+      next(ApiError.badRequest('Channel does not exist'));
+      return;
+    }
 
-    const { length } = users[0].dataValues.Users;
+    const users = await channel.getUsers();
 
-    res.status(200).send({ users: length, channel });
+    res.status(200).send({ users: users.length, channel });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
