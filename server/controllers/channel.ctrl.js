@@ -41,6 +41,7 @@ exports.createChannel = asyncHandler(async (req, res, next) => {
   });
 
   await user.addChannels(channel);
+  console.log(channel);
 
   res.status(201).send(channel);
 });

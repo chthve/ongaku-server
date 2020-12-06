@@ -16,7 +16,6 @@ app.use(
   cookieSession({
     name: 'session',
     keys: ['ongaku'],
-    maxAge: 100000000,
   })
 );
 app.use(cookieParser());

@@ -14,9 +14,53 @@ exports.getFromDiscogs = (req, res) => {
     if (err) {
       res.status(400).send(err);
     }
-    const json = JSON.parse(body);
-    console.log(json);
-    res.status(200).send(json);
+    res.status(200).send(body);
+  });
+};
+
+exports.postToDiscogs = (req, res) => {
+  const { url, token, tokenSecret, postBody, postContentType } = req.body;
+
+  _oauth.post(
+    BASE_URL + url,
+    token,
+    tokenSecret,
+    postBody,
+    postContentType,
+    (err, body) => {
+      if (err) {
+        res.status(400).send(err);
+      }
+      res.status(200).send(body);
+    }
+  );
+};
+
+exports.putToDiscogs = (req, res) => {
+  const { url, token, tokenSecret, postBody, postContentType } = req.body;
+
+  _oauth.put(
+    BASE_URL + url,
+    token,
+    tokenSecret,
+    postBody,
+    postContentType,
+    (err, body) => {
+      if (err) {
+        res.status(400).send(err);
+      }
+      res.status(200).send(body);
+    }
+  );
+};
+
+exports.deleteFromDiscogs = (req, res) => {
+  const { url, token, tokenSecret } = req.body;
+  _oauth.delete(BASE_URL + url, token, tokenSecret, (err) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    res.sendStatus(204);
   });
 };
 
