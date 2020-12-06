@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -6,6 +7,8 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const router = require('./router');
+const apiErrorHandler = require('./utils/apiErrorHandler');
+const ApiError = require('./utils/apiError');
 
 const app = express();
 
@@ -36,5 +39,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(router);
+
+app.all('*', (req, res, next) => {
+  return next(
+    ApiError.notFound(`Can't find ${req.originalUrl} on this server`)
+  );
+});
+
+app.use(apiErrorHandler);
 
 module.exports = app;

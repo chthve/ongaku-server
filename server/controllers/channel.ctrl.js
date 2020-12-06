@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const db = require('../../models');
+const ApiError = require('../utils/apiError');
 
 exports.createDefaultChannels = async (req, res) => {
   try {
@@ -12,10 +13,17 @@ exports.createDefaultChannels = async (req, res) => {
   }
 };
 
-exports.createChannel = async (req, res) => {
+exports.createChannel = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { name, isPrivate, parentId } = req.body;
+
+    const user = await db.User.findByPk(userId);
+
+    if (!user) {
+      next(ApiError.notFound('No user found with that id'));
+      return;
+    }
 
     if (!isPrivate) {
       const queryChannel = await db.Channel.findOne({
@@ -25,7 +33,8 @@ exports.createChannel = async (req, res) => {
       });
 
       if (queryChannel) {
-        res.status(409).send('Channel already exists!');
+        next(ApiError.duplicate('Channel already exists!'));
+        return;
       }
     }
 
@@ -36,7 +45,6 @@ exports.createChannel = async (req, res) => {
       private: !!isPrivate,
     });
 
-    const user = await db.User.findByPk(userId);
     await user.addChannels(channel);
     console.log(channel);
 

@@ -34,23 +34,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       artist: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       year: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       label: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       thumbnail: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       body: {
         type: DataTypes.TEXT,
