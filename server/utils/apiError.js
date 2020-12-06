@@ -8,7 +8,11 @@ class ApiError {
     return new ApiError(400, msg);
   }
 
-  static notAuthorized(msg) {
+  static unauthorized(msg) {
+    return new ApiError(401, msg);
+  }
+
+  static forbidden(msg) {
     return new ApiError(403, msg);
   }
 
@@ -16,11 +20,11 @@ class ApiError {
     return new ApiError(404, msg);
   }
 
-  static duplicate(msg) {
+  static conflict(msg) {
     return new ApiError(409, msg);
   }
 
-  static internal(msg) {
+  static internalServerError(msg) {
     return new ApiError(500, msg);
   }
 }

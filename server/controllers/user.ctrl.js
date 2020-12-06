@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 const db = require('../../models');
+const ApiError = require('../utils/apiError');
 
-exports.getUser = async (req, res) => {
+exports.getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -11,6 +12,11 @@ exports.getUser = async (req, res) => {
         { model: db.Channel, as: 'channels' },
       ],
     });
+
+    if (!user) {
+      next(ApiError.notFound('No user found with that id'));
+      return;
+    }
 
     res.status(200).send(user);
   } catch (error) {
@@ -49,13 +55,25 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.savePost = async (req, res) => {
+exports.savePost = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { postId } = req.body;
 
     const user = await db.User.findByPk(id);
+
+    if (!user) {
+      next(ApiError.notFound('No user found with that id'));
+      return;
+    }
+
     const post = await db.Post.findByPk(postId);
+
+    if (!post) {
+      next(ApiError.notFound('post does not exist'));
+      return;
+    }
+
     const result = await user.addSaved(post);
 
     res.status(201).send(result);
