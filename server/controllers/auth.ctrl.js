@@ -7,6 +7,9 @@ const BASE_URL = 'https://api.discogs.com';
 
 exports.getFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
+  console.log(url);
+  console.log(token);
+  console.log(tokenSecret);
   _oauth.get(BASE_URL + url, token, tokenSecret, (err, body) => {
     if (err) {
       res.status(400).send(err);
@@ -60,3 +63,7 @@ exports.deleteFromDiscogs = (req, res) => {
     res.sendStatus(204);
   });
 };
+
+// middlewares
+// isAuthenticated
+// isAuthorized

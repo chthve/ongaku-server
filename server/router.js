@@ -46,7 +46,7 @@ router
   .post(channelCtrl.createDefaultChannels);
 
 router
-  .route('/achannels/users/:userId')
+  .route('/channels/users/:userId')
   .post(channelCtrl.createChannel)
   .delete(channelCtrl.deleteAllChannelsFromUser);
 
