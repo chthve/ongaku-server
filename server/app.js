@@ -38,12 +38,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const loggerMiddleware = (req, res, next) => {
-  console.log('REQ USER!!!', req.user);
-  next();
-};
+// const loggerMiddleware = (req, res, next) => {
+//   console.log('REQ USER!!!', req.user);
+//   next();
+// };
 
-app.use(loggerMiddleware);
+// app.use(loggerMiddleware);
 
 app.use(router);
 

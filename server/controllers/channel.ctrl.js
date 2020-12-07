@@ -48,7 +48,6 @@ exports.subscribeToChannels = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const channels = req.body;
 
-  const channelIds = channels.map((channel) => channel.id);
   const user = await db.User.findByPk(id);
 
   if (!user) {
@@ -61,6 +60,20 @@ exports.subscribeToChannels = asyncHandler(async (req, res, next) => {
   const checkIfAlreadySubscribed = (existingChannels, newChannel) => {
     return existingChannels.some((channel) => channel.id === newChannel[0]);
   };
+
+  if (!Array.isArray(channels)) {
+    const privateChannels = await user.addChannels(channels.id);
+
+    const newlySubscribedChannels = await db.Channel.findOne({
+      where: {
+        id: privateChannels[0].ChannelId,
+      },
+    });
+
+    res.status(201).send(newlySubscribedChannels);
+  }
+
+  const channelIds = channels.map((channel) => channel.id);
 
   if (checkIfAlreadySubscribed(alreadySubscribed, channelIds)) {
     next(ApiError.conflict('You already subcribed to that channel'));
