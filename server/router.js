@@ -17,7 +17,7 @@ router.route('/users/:id').get(userCtrl.getUser).delete(userCtrl.deleteUser);
 router.post('/users', userCtrl.createUser);
 
 router
-  .route('/users/:id/savedPosts') // tell frontend
+  .route('/users/:id/savedPosts')
   .get(userCtrl.getSavedPosts)
   .post(userCtrl.savePost)
   .delete(userCtrl.removeSavedPost);
@@ -25,7 +25,7 @@ router
 router
   .route('/users/:id/channels')
   .post(channelCtrl.subscribeToChannels)
-  .delete(channelCtrl.unsubscribeFromChannel);
+  .delete(authCtrl.isAuthorized, channelCtrl.unsubscribeFromChannel);
 
 router
   .route('/posts/:id')
