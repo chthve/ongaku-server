@@ -25,7 +25,7 @@ router
 router
   .route('/users/:id/channels')
   .post(channelCtrl.subscribeToChannels)
-  .delete(authCtrl.isAuthorized, channelCtrl.unsubscribeFromChannel);
+  .delete(channelCtrl.unsubscribeFromChannel);
 
 router
   .route('/posts/:id')
