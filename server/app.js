@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const xss = require('xss-clean');
 const router = require('./router');
 const apiErrorHandler = require('./utils/apiErrorHandler');
 const ApiError = require('./utils/apiError');
@@ -38,12 +39,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const loggerMiddleware = (req, res, next) => {
-//   console.log('REQ USER!!!', req.user);
-//   next();
-// };
-
-// app.use(loggerMiddleware);
+app.use(xss());
 
 app.use(router);
 
