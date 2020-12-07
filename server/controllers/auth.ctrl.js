@@ -69,14 +69,17 @@ exports.deleteFromDiscogs = (req, res) => {
 // isAuthorized
 
 // Authorization middleware - restrict certain routes if not current logged in user
-exports.isAuthorized = async (req, res, next) => {
-  console.log('REQ USER', req.user);
+// exports.isAuthorized = async (req, res, next) => {
+//   let userId;
+//   const cookieId = req.user.id;
 
-  let userId;
+//   if (req.params.id) {
+//     userId = +req.params.id;
+//   }
 
-  console.log(userId);
+//   if (userId === cookieId) {
+//     console.log('same user');
+//   }
 
-  console.log(req.body);
-
-  next();
-};
+//   next();
+// };
