@@ -17,10 +17,10 @@ router.route('/users/:id').get(userCtrl.getUser).delete(userCtrl.deleteUser);
 router.post('/users', userCtrl.createUser);
 
 router
-  .route('/users/:id/saved')
+  .route('/users/:id/savedPosts') // tell frontend
   .get(userCtrl.getSavedPosts)
   .post(userCtrl.savePost)
-  .delete(userCtrl.removeSavePost);
+  .delete(userCtrl.removeSavedPost);
 
 router
   .route('/users/:id/channels')
@@ -35,10 +35,9 @@ router
 
 router.post('/posts/:channelId', postCtrl.createPost);
 
-router
-  .route('/posts/:id/comment')
-  .post(commentCtrl.postComment)
-  .delete(commentCtrl.deleteComment);
+router.post('/posts/:id/comment/', commentCtrl.postComment);
+
+router.delete('/posts/:id/comment/:commentId', commentCtrl.deleteComment);
 
 router
   .route('/channels/default')
@@ -52,11 +51,12 @@ router
 
 router.get('/channels', channelCtrl.getAllChannels);
 router.get('/channels/public', channelCtrl.getPublicChannels);
-router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 router
   .route('/channels/:id')
   .get(channelCtrl.getChannel)
   .delete(channelCtrl.deletePrivateChannel);
+
+router.route('/tags').get(tagCtrl.getTags).post(tagCtrl.createTag);
 
 router.get('/auth/provider', passport.authenticate('provider'));
 
