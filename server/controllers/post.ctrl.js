@@ -1,83 +1,91 @@
-/* eslint-disable no-console */
 const db = require('../../models');
+const ApiError = require('../utils/apiError');
+const asyncHandler = require('../utils/asyncHandler');
 
-exports.getPost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const post = await db.Post.findByPk(id, {
-      include: [
-        { model: db.Comment, as: 'comments' },
-        { model: db.Tag, as: 'tags' },
-      ],
-    });
-    res.status(200).send(post);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+exports.getPost = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const post = await db.Post.findByPk(id, {
+    include: [
+      { model: db.Comment, as: 'comments' },
+      { model: db.Tag, as: 'tags' },
+    ],
+  });
+
+  if (!post) {
+    next(ApiError.badRequest('Post does not exist'));
+    return;
   }
-};
 
-exports.createPost = async (req, res) => {
-  try {
-    const {
-      userId,
-      postTitle,
-      title,
-      artist,
-      thumbnail,
-      year,
-      body,
-      label,
-      url,
-    } = req.body;
-    const { channelId } = req.params;
-    const channel = await db.Channel.findByPk(channelId);
+  res.status(200).send(post);
+});
 
-    const post = await db.Post.create({
-      userId,
-      postTitle,
-      title,
-      artist,
-      year,
-      label,
-      body,
-      thumbnail,
-      url,
-    });
+exports.createPost = asyncHandler(async (req, res, next) => {
+  const {
+    userId,
+    postTitle,
+    title,
+    artist,
+    thumbnail,
+    year,
+    body,
+    label,
+    url,
+  } = req.body;
+  const { channelId } = req.params;
 
-    await channel.addPosts(post);
-
-    // await post.setTags(tags);
-
-    res.status(201).send(post);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  const channel = await db.Channel.findByPk(channelId);
+  if (!channel) {
+    next(ApiError.badRequest('Channel does not exist'));
+    return;
   }
-};
 
-exports.deletePost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userId } = req.body;
-    await db.Post.destroy({
-      where: { id, userId },
-    });
-    res.sendStatus(204);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
+  const post = await db.Post.create({
+    userId,
+    postTitle,
+    title,
+    artist,
+    year,
+    label,
+    body,
+    thumbnail,
+    url,
+  });
 
-exports.updatePost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userId, postTitle, body } = req.body;
-    await db.Post.update({ postTitle, body }, { where: { id, userId } });
-    res.sendStatus(204);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  await channel.addPosts(post);
+
+  res.status(201).send(post);
+});
+
+exports.deletePost = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+
+  const deletedPost = await db.Post.destroy({
+    where: { id, userId },
+  });
+
+  if (!deletedPost) {
+    next(ApiError.badRequest('Post was not deleted because it does not exist'));
+    return;
   }
-};
+
+  res.sendStatus(204);
+});
+
+exports.updatePost = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const { userId, postTitle, body } = req.body;
+
+  const updatedPost = await db.Post.update(
+    { postTitle, body },
+    { where: { id, userId } }
+  );
+
+  if (!updatedPost[0]) {
+    next(ApiError.badRequest('Post was not updated because it does not exist'));
+    return;
+  }
+
+  res.sendStatus(204);
+});

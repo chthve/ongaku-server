@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const db = require('../../models');
 const ApiError = require('../utils/apiError');
 const asyncHandler = require('../utils/asyncHandler');
@@ -41,7 +40,6 @@ exports.createChannel = asyncHandler(async (req, res, next) => {
   });
 
   await user.addChannels(channel);
-  console.log(channel);
 
   res.status(201).send(channel);
 });
