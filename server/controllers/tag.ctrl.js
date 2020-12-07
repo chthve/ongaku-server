@@ -1,28 +1,18 @@
-/* eslint-disable no-console */
 const db = require('../../models');
+const asyncHandler = require('../utils/asyncHandler');
 
-exports.createTag = async (req, res) => {
-  try {
-    const { name } = req.body;
+exports.createTag = asyncHandler(async (req, res) => {
+  const { name } = req.body;
 
-    const tag = await db.Tag.create({
-      name,
-    });
+  const tag = await db.Tag.create({
+    name,
+  });
 
-    res.status(201).send(tag);
-  } catch (error) {
-    console.error(error);
-    res.status(500);
-  }
-};
+  res.status(201).send(tag);
+});
 
-exports.getTags = async (req, res) => {
-  try {
-    const tag = await db.Tag.findAll();
+exports.getTags = asyncHandler(async (req, res) => {
+  const tag = await db.Tag.findAll();
 
-    res.status(201).send(tag);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
+  res.status(201).send(tag);
+});

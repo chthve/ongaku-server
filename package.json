@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development node server/server.js",
     "dev": "NODE_ENV=development nodemon server/server.js",
-    "populate": "node mocks/populateDB.js"
+    "populate": "node mocks/populate.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "passport-oauth": "^1.0.0",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "xss-clean": "^0.1.1"
   }
 }
