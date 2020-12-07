@@ -1,29 +1,25 @@
 /* eslint-disable no-console */
 const db = require('../../models');
 const ApiError = require('../utils/apiError');
+const asyncHandler = require('../utils/asyncHandler');
 
-exports.getUser = async (req, res, next) => {
-  try {
-    const { id } = req.params;
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
 
-    const user = await db.User.findByPk(id, {
-      include: [
-        { model: db.Post, as: 'posts' },
-        { model: db.Channel, as: 'channels' },
-      ],
-    });
+  const user = await db.User.findByPk(id, {
+    include: [
+      { model: db.Post, as: 'posts' },
+      { model: db.Channel, as: 'channels' },
+    ],
+  });
 
-    if (!user) {
-      next(ApiError.notFound('No user found with that id'));
-      return;
-    }
-
-    res.status(200).send(user);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  if (!user) {
+    next(ApiError.notFound('No user found with that id'));
+    return;
   }
-};
+
+  res.status(200).send(user);
+});
 
 exports.createUser = async (req, res) => {
   try {
@@ -55,60 +51,69 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.savePost = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { postId } = req.body;
+exports.savePost = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const { postId } = req.body;
 
-    const user = await db.User.findByPk(id);
-
-    if (!user) {
-      next(ApiError.notFound('No user found with that id'));
-      return;
-    }
-
-    const post = await db.Post.findByPk(postId);
-
-    if (!post) {
-      next(ApiError.notFound('post does not exist'));
-      return;
-    }
-
-    const result = await user.addSaved(post);
-
-    res.status(201).send(result);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  const user = await db.User.findByPk(id);
+  if (!user) {
+    next(ApiError.notFound('No user found with that id'));
+    return;
   }
-};
 
-exports.removeSavePost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { postId } = req.body;
-
-    const user = await db.User.findByPk(id);
-    const post = await db.Post.findByPk(postId);
-    await user.removeSaved(post);
-
-    res.sendStatus(204);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  const post = await db.Post.findByPk(postId);
+  if (!post) {
+    next(ApiError.notFound('Post does not exist'));
+    return;
   }
-};
 
-exports.getSavedPosts = async (req, res) => {
-  try {
-    const { id } = req.params;
+  const posts = await user.getSaved();
+  const target = posts.find((p) => p.id === postId);
 
-    const user = await db.User.findByPk(id);
-    const result = await user.getSaved();
-
-    res.status(200).send(result);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+  if (target) {
+    next(ApiError.conflict("Post is already saved to 'For Later' list"));
+    return;
   }
-};
+
+  const result = await user.addSaved(post);
+
+  res.status(201).send(result);
+});
+
+exports.removeSavedPost = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const { postId } = req.body;
+
+  const user = await db.User.findByPk(id);
+  if (!user) {
+    next(ApiError.notFound('No user found with that id'));
+    return;
+  }
+
+  const posts = await user.getSaved();
+  const target = posts.find((post) => post.id === postId);
+
+  if (!target) {
+    next(ApiError.notFound("Post is not in your 'For Later' list"));
+    return;
+  }
+
+  await user.removeSaved(target);
+
+  res.sendStatus(204);
+});
+
+exports.getSavedPosts = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await db.User.findByPk(id);
+
+  if (!user) {
+    next(ApiError.notFound('No user found with that id'));
+    return;
+  }
+
+  const result = await user.getSaved();
+
+  res.status(200).send(result);
+});

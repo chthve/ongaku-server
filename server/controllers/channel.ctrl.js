@@ -107,6 +107,7 @@ exports.unsubscribeFromChannel = asyncHandler(async (req, res, next) => {
 
 exports.getAllChannels = asyncHandler(async (req, res) => {
   const channels = await db.Channel.findAll({});
+
   res.status(200).send(channels);
 });
 
@@ -117,6 +118,7 @@ exports.getDefaultChannels = asyncHandler(async (req, res) => {
       ownerId: null,
     },
   });
+
   res.status(200).send(channels);
 });
 
@@ -157,17 +159,27 @@ exports.getPublicChannels = asyncHandler(async (req, res) => {
   res.status(200).send(channels);
 });
 
-exports.deletePrivateChannel = asyncHandler(async (req, res) => {
+exports.deletePrivateChannel = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const { ownerId } = req.body;
 
-  await db.Channel.destroy({
+  const deletedChannel = await db.Channel.destroy({
     where: {
       id,
       ownerId,
       private: true,
     },
   });
+
+  if (!deletedChannel) {
+    next(
+      ApiError.badRequest(
+        'Private channel was not deleted because it does not exist'
+      )
+    );
+    return;
+  }
+
   res.sendStatus(204);
 });
 
@@ -180,5 +192,6 @@ exports.deleteAllChannelsFromUser = asyncHandler(async (req, res) => {
       private: true,
     },
   });
+
   res.sendStatus(204);
 });
