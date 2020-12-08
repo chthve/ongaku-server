@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
-const db = require('../models/index');
-const userCtrl = require('./controllers/user.ctrl');
-const postCtrl = require('./controllers/post.ctrl');
-const channelCtrl = require('./controllers/channel.ctrl');
-const commentCtrl = require('./controllers/comment.ctrl');
-const tagCtrl = require('./controllers/tag.ctrl');
-const authCtrl = require('./controllers/auth.ctrl');
+const db = require('../../models/index');
+const userCtrl = require('../controllers/user.ctrl');
+const postCtrl = require('../controllers/post.ctrl');
+const channelCtrl = require('../controllers/channel.ctrl');
+const commentCtrl = require('../controllers/comment.ctrl');
+const tagCtrl = require('../controllers/tag.ctrl');
+const authCtrl = require('../controllers/auth.ctrl');
 
-const { initialize } = require('./auth');
+const { initialize } = require('../auth');
 
 initialize(passport);
 

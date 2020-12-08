@@ -4,7 +4,7 @@ const {
   users,
   tags,
   defaultChannels,
-  privateChannels,
+
   posts,
   comments,
 } = require('./mock');
@@ -17,23 +17,23 @@ const {
 
     const user1 = await db.User.findOne({
       where: {
-        username: 'Baiju',
+        username: 'Leo',
       },
     });
 
     const user2 = await db.User.findOne({
       where: {
-        username: 'Gui',
+        username: 'Berta',
       },
     });
 
     const user3 = await db.User.findOne({
       where: {
-        username: 'George',
+        username: 'Mo',
       },
     });
 
-    const createPrivateChannel = async (userId, channelName) => {
+    /*  const createPrivateChannel = async (userId, channelName) => {
       const newChannel = await db.Channel.create({
         ownerId: userId,
         name: channelName,
@@ -42,6 +42,7 @@ const {
 
       return newChannel;
     };
+    */
 
     const subscribeUserToChannel = async (userId, channelId) => {
       try {
@@ -88,34 +89,43 @@ const {
       });
     };
 
-    await createPrivateChannel(user1.dataValues.id, privateChannels[0].name);
-    const channel2 = await createPrivateChannel(
-      user2.dataValues.id,
-      privateChannels[1].name
-    );
+    const channel = await db.Channel.findOne({
+      where: { name: 'Electronic' },
+    });
 
-    await subscribeUserToChannel(user1.dataValues.id, channel2.dataValues.id);
-    await subscribeUserToChannel(user3.dataValues.id, channel2.dataValues.id);
+    await subscribeUserToChannel(user1.dataValues.id, channel.dataValues.id);
+    await subscribeUserToChannel(user2.dataValues.id, channel.dataValues.id);
+    await subscribeUserToChannel(user3.dataValues.id, channel.dataValues.id);
 
     const post1 = await createPost(
-      user1.dataValues.id,
-      channel2.dataValues.id,
-      posts[1]
+      user2.dataValues.id,
+      channel.dataValues.id,
+      posts[0]
     );
     const post2 = await createPost(
       user3.dataValues.id,
-      channel2.dataValues.id,
-      posts[0]
+      channel.dataValues.id,
+      posts[1]
+    );
+    const post3 = await createPost(
+      user1.dataValues.id,
+      channel.dataValues.id,
+      posts[2]
     );
     await addComment(
-      user3.dataValues.id,
+      user1.dataValues.id,
       post1.dataValues.id,
       comments[0].body
     );
     await addComment(
-      user2.dataValues.id,
+      user1.dataValues.id,
       post2.dataValues.id,
       comments[1].body
+    );
+    await addComment(
+      user3.dataValues.id,
+      post3.dataValues.id,
+      comments[2].body
     );
 
     console.log('Data populated!!');

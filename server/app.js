@@ -7,7 +7,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const xss = require('xss-clean');
-const router = require('./router');
+const router = require('./router/router');
 const apiErrorHandler = require('./utils/apiErrorHandler');
 const ApiError = require('./utils/apiError');
 

@@ -21,6 +21,8 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   res.status(200).send(user);
 });
 
+// for dev only
+
 exports.createUser = async (req, res) => {
   try {
     const { id, username, resourceUrl, token, tokenSecret } = req.body;

@@ -1,21 +1,21 @@
 const users = [
   {
-    id: '24435',
-    username: 'Baiju',
+    id: '2443597',
+    username: 'Leo',
     token: 'qdkfjhqlrufhpaibdv',
     tokenSecret: 'qlfkjqdmlvqdfbvqm',
     resourceUrl: 'https://discogs.com',
   },
   {
-    id: '247835',
-    username: 'Gui',
+    id: '2478357',
+    username: 'Berta',
     token: 'sdjfqm',
     tokenSecret: 'fsiqljm',
     resourceUrl: 'https://discogs.com',
   },
   {
-    id: '143256',
-    username: 'George',
+    id: '1432560',
+    username: 'Mo',
     token: 'qfdkhlfkqh',
     tokenSecret: 'qlfkjqdmfqjsdvblvqdfbvqm',
     resourceUrl: 'https://discogs.com',
@@ -63,7 +63,7 @@ const privateChannels = [
     name: "Ambient 90's",
   },
   {
-    name: 'Psychedelics PLUS',
+    name: 'Morning Breaks',
   },
 ];
 
@@ -78,18 +78,19 @@ const tags = [
 
 const posts = [
   {
-    postTitle: 'Classic Tune !',
-    title: 'E2E4',
-    artist: 'Manuel Gottsching',
-    year: 1984,
-    label: 'MG.Art',
-    body: 'My favorite tune ever',
+    postTitle: 'Bananaramaaaa',
+    title: 'The Velvet Underground & Nico',
+    artist: 'The Velvet Underground',
+    year: 1966,
+    label: 'Verve Records',
+    body: 'Array is not an array ?',
     thumbnail:
-      'https://img.discogs.com/aPGUpMPZGt6kRWSto6JCFeom57I=/fit-in/600x600/filters:strip_ic[…]rgb():quality(90)/discogs-images/R-303333-1290356604.jpeg.jpg',
-    url: 'https://www.discogs.com/fr/Manuel-G%C3%B6ttsching-E2-E4/master/2786',
+      'https://img.discogs.com/PaJz9xI0VmAltBM72HrOEJAZx44=/fit-in/600x587/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5034045-1454593768-8856.jpeg.jpg',
+    url:
+      'https://www.discogs.com/fr/The-Velvet-Underground-Nico-The-Velvet-Underground-Nico/master/35276',
   },
   {
-    postTitle: 'For thus who misses the bush',
+    postTitle: 'For those who misses the bush',
     title: 'Bushes',
     artist: 'Markus Nickolai',
     year: 1998,
@@ -100,14 +101,30 @@ const posts = [
     url:
       'https://www.discogs.com/fr/Markus-Nikolai-Passion-Bushes/master/512630',
   },
+  {
+    postTitle: 'No gravity, to take literally',
+    title: 'No gravity',
+    artist: 'Closer MusiK',
+    year: 2004,
+    label: 'Kompakt',
+    body:
+      'I was listening to this yesterday and felt very melancholic. Wanted to share it with you guys !',
+    thumbnail:
+      'https://img.discogs.com/uTnFRVO3XY9eJwq9LxdXiE4BrS4=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-41046-1099790381.jpg.jpg',
+    url:
+      'https://www.discogs.com/fr/Closer-Musik-One-Two-Three-No-Gravity/release/41046',
+  },
 ];
 
 const comments = [
   {
-    body: 'Oh my god my tuneeee!!!',
+    body: 'Stop with your Bananas and come dance !!',
   },
   {
     body: 'I am already in the bush, come and join me ;) !!!',
+  },
+  {
+    body: "Don't be sad Leo, come have some carlitos at CW",
   },
 ];
 
