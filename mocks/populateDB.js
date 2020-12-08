@@ -33,17 +33,6 @@ const {
       },
     });
 
-    /*  const createPrivateChannel = async (userId, channelName) => {
-      const newChannel = await db.Channel.create({
-        ownerId: userId,
-        name: channelName,
-        private: true,
-      });
-
-      return newChannel;
-    };
-    */
-
     const subscribeUserToChannel = async (userId, channelId) => {
       try {
         const user = await db.User.findByPk(userId);
@@ -133,3 +122,14 @@ const {
     console.error('OOOPS, DATA WAS NOT POPULATED', error);
   }
 })();
+
+/*  const createPrivateChannel = async (userId, channelName) => {
+      const newChannel = await db.Channel.create({
+        ownerId: userId,
+        name: channelName,
+        private: true,
+      });
+
+      return newChannel;
+    };
+    */

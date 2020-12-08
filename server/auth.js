@@ -59,5 +59,5 @@ const initialize = (passport) => {
 
 module.exports = {
   initialize,
-  discogStrategy,
+  discogsApi: discogStrategy._oauth,
 };

@@ -97,7 +97,7 @@ const posts = [
     label: 'Perlon',
     body: 'There is someone in the bush',
     thumbnail:
-      'https://img.discogs.com/rGc19pz11eLORpHUDqyu7bSRwBg=/fit-in/482x480/filters:strip_ic[…]():quality(90)/discogs-images/R-1765-1390154333-3631.jpeg.jpg',
+      'https://img.discogs.com/rGc19pz11eLORpHUDqyu7bSRwBg=/fit-in/482x480/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1765-1390154333-3631.jpeg.jpg',
     url:
       'https://www.discogs.com/fr/Markus-Nikolai-Passion-Bushes/master/512630',
   },

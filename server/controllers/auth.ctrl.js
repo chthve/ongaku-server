@@ -1,16 +1,10 @@
-/* eslint-disable no-console */
-const { discogStrategy } = require('../auth');
-
-const { _oauth } = discogStrategy;
+const { discogsApi } = require('../auth');
 
 const BASE_URL = 'https://api.discogs.com';
 
 exports.getFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
-  console.log(url);
-  console.log(token);
-  console.log(tokenSecret);
-  _oauth.get(BASE_URL + url, token, tokenSecret, (err, body) => {
+  discogsApi.get(BASE_URL + url, token, tokenSecret, (err, body) => {
     if (err) {
       res.status(400).send(err);
     }
@@ -21,7 +15,7 @@ exports.getFromDiscogs = (req, res) => {
 exports.postToDiscogs = (req, res) => {
   const { url, token, tokenSecret, postBody, postContentType } = req.body;
 
-  _oauth.post(
+  discogsApi.post(
     BASE_URL + url,
     token,
     tokenSecret,
@@ -39,7 +33,7 @@ exports.postToDiscogs = (req, res) => {
 exports.putToDiscogs = (req, res) => {
   const { url, token, tokenSecret, postBody, postContentType } = req.body;
 
-  _oauth.put(
+  discogsApi.put(
     BASE_URL + url,
     token,
     tokenSecret,
@@ -56,30 +50,10 @@ exports.putToDiscogs = (req, res) => {
 
 exports.deleteFromDiscogs = (req, res) => {
   const { url, token, tokenSecret } = req.body;
-  _oauth.delete(BASE_URL + url, token, tokenSecret, (err) => {
+  discogsApi.delete(BASE_URL + url, token, tokenSecret, (err) => {
     if (err) {
       res.status(400).send(err);
     }
     res.sendStatus(204);
   });
 };
-
-// middlewares
-// isAuthenticated
-// isAuthorized
-
-// Authorization middleware - restrict certain routes if not current logged in user
-// exports.isAuthorized = async (req, res, next) => {
-//   let userId;
-//   const cookieId = req.user.id;
-
-//   if (req.params.id) {
-//     userId = +req.params.id;
-//   }
-
-//   if (userId === cookieId) {
-//     console.log('same user');
-//   }
-
-//   next();
-// };
